@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        input,
+        button {
+            margin: 5px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Login / Register</h2>
+    <input type="text" id="username" placeholder="Username"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="register()">Register</button>
+    <button onclick="login()">Login</button>
+    <br><br>
+    <h2>Protected Route</h2>
+    <button onclick="accessProtected()">Access Protected Route</button>
+    <p id="protectedResponse"></p>
+
+    <script>
+        const API_URL = "http://localhost:3001";
+        let token = "";
+
+        async function register() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const response = await fetch(`${API_URL}/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
+            alert(data.message);
+        }
+
+        async function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const response = await fetch(`${API_URL}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
+
+            if (data.token) {
+                token = data.token;
+                alert("Login successful!");
+            } else {
+                alert("Login failed: " + data.message);
+            }
+        }
+
+        async function accessProtected() {
+            if (!token) {
+                alert("Please log in first.");
+                return;
+            }
+
+            const response = await fetch(`${API_URL}/protected`, {
+                method: "GET",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            const data = await response.json();
+            document.getElementById("protectedResponse").innerText = JSON.stringify(data);
+        }
+    </script>
+</body>
+
+</html>
