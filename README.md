@@ -6,17 +6,14 @@ detailed information about each film.
 
 ## User Story
 
-_As a horror film fan, I want to search and browse a movie database so that I
-can discover films and learn more about them._
+As horror film fans, we want to search and browse a movie database so that we
+can discover films and learn more about them.
 
 ## Features
 
 - Browse a collection of horror films
-- Search for movies by title
-- Filter films by genre, release year, or rating
-- View movie details, including the synopsis, poster, release date, and rating
 - Save favourite films for easy access
-- Responsive design for desktop, tablet, and mobile devices
+- Responsive design
 
 ## Technologies Used
 
