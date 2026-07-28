@@ -1,87 +1,59 @@
 # Horror Movie Database
 
-A React application for discovering and exploring horror films. Users will be
-able to browse a collection of movies, search for specific titles, and view
-detailed information about each film.
+This project collects information for 40 chosen horror films from TMDB.
 
-## User Story
+The five subgenres are:
 
-As horror film fans, we want to search and browse a movie database so that we
-can discover films and learn more about them.
+- Slasher
+- Supernatural
+- Psychological
+- Zombie
+- Sci-Fi Horror
 
-## Features
+Every movie receives exactly two categories: `Horror` and one subgenre.
 
-- Browse a collection of horror films
-- Save favourite films for easy access
-- Responsive design
+## What the finished movies.json contains
 
-## Technologies Used
+Each movie has:
 
-- React
-- React Router
-- JavaScript
-- HTML
-- CSS
-- A third-party movie API
+- id
+- tmdbId
+- title
+- description
+- categories
+- director
+- runtime
+- releaseYear
+- posterUrl
 
-## Getting Started
+## Setup on your Mac
 
-### 1. Clone the repository
-
-```bash
-git clone <your-repository-url>
-cd <your-project-folder>
-```
-
-### 2. Install dependencies
+1. Open this folder in VS Code.
+2. Open Terminal in VS Code.
+3. Install the one required package:
 
 ```bash
 npm install
 ```
 
-### 3. Configure environment variables
-
-Create a `.env` file in the project root and add the API key required by your
-chosen movie service:
+4. Duplicate `.env.example` and rename the copy to `.env`.
+5. Paste your TMDB **API Read Access Token** into `.env`:
 
 ```env
-VITE_MOVIE_API_KEY=your_api_key
+TMDB_TOKEN=your_real_token_here
 ```
 
-### 4. Run the app locally
+6. Run:
 
 ```bash
-npm run dev
+npm start
 ```
 
-Visit the local URL shown in the terminal, usually
-**http://localhost:5173**.
+The program creates `movies.json`.
 
-## Planned Folder Structure
+## Important
 
-```text
-src/
-  components/    reusable interface components
-  pages/         application pages
-  services/      movie API requests
-  context/       shared application state
-  assets/        images and other static files
-  App.jsx        routes and main application layout
-  main.jsx       application entry point
-```
+Do not upload `.env` to GitHub. It is already included in `.gitignore`.
 
-## Links
-
-- **GitHub repository:** _Add repository URL_
-- **Deployed application:** _Add live URL_
-
-## Future Improvements
-
-- Add user accounts
-- Allow users to rate and review films
-- Create personalised watchlists
-- Recommend films based on saved favourites
-
-## Author
-
-Tamara Everett
+The script searches using both title and release year, then requests the movie
+details and credits so it can obtain the runtime and director.

@@ -1,0 +1,13 @@
+{
+  "name": "horror-movie-database",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Collect 40 selected horror films from TMDB.",
+  "main": "getMovies.js",
+  "scripts": {
+    "start": "node getMovies.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1"
+  }
+}

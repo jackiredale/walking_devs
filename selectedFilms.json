@@ -1,0 +1,202 @@
+[
+  {
+    "title": "Psycho",
+    "year": 1960,
+    "subgenre": "Slasher"
+  },
+  {
+    "title": "The Texas Chain Saw Massacre",
+    "year": 1974,
+    "subgenre": "Slasher"
+  },
+  {
+    "title": "Black Christmas",
+    "year": 1974,
+    "subgenre": "Slasher"
+  },
+  {
+    "title": "Halloween",
+    "year": 1978,
+    "subgenre": "Slasher"
+  },
+  {
+    "title": "Friday the 13th",
+    "year": 1980,
+    "subgenre": "Slasher"
+  },
+  {
+    "title": "A Nightmare on Elm Street",
+    "year": 1984,
+    "subgenre": "Slasher"
+  },
+  {
+    "title": "Child's Play",
+    "year": 1988,
+    "subgenre": "Slasher"
+  },
+  {
+    "title": "Scream",
+    "year": 1996,
+    "subgenre": "Slasher"
+  },
+  {
+    "title": "Dracula",
+    "year": 1931,
+    "subgenre": "Supernatural"
+  },
+  {
+    "title": "The Innocents",
+    "year": 1961,
+    "subgenre": "Supernatural"
+  },
+  {
+    "title": "Rosemary's Baby",
+    "year": 1968,
+    "subgenre": "Supernatural"
+  },
+  {
+    "title": "The Exorcist",
+    "year": 1973,
+    "subgenre": "Supernatural"
+  },
+  {
+    "title": "Poltergeist",
+    "year": 1982,
+    "subgenre": "Supernatural"
+  },
+  {
+    "title": "The Ring",
+    "year": 2002,
+    "subgenre": "Supernatural"
+  },
+  {
+    "title": "The Conjuring",
+    "year": 2013,
+    "subgenre": "Supernatural"
+  },
+  {
+    "title": "Hereditary",
+    "year": 2018,
+    "subgenre": "Supernatural"
+  },
+  {
+    "title": "Cat People",
+    "year": 1942,
+    "subgenre": "Psychological"
+  },
+  {
+    "title": "Peeping Tom",
+    "year": 1960,
+    "subgenre": "Psychological"
+  },
+  {
+    "title": "Repulsion",
+    "year": 1965,
+    "subgenre": "Psychological"
+  },
+  {
+    "title": "The Shining",
+    "year": 1980,
+    "subgenre": "Psychological"
+  },
+  {
+    "title": "Misery",
+    "year": 1990,
+    "subgenre": "Psychological"
+  },
+  {
+    "title": "The Silence of the Lambs",
+    "year": 1991,
+    "subgenre": "Psychological"
+  },
+  {
+    "title": "The Others",
+    "year": 2001,
+    "subgenre": "Psychological"
+  },
+  {
+    "title": "Get Out",
+    "year": 2017,
+    "subgenre": "Psychological"
+  },
+  {
+    "title": "White Zombie",
+    "year": 1932,
+    "subgenre": "Zombie"
+  },
+  {
+    "title": "Night of the Living Dead",
+    "year": 1968,
+    "subgenre": "Zombie"
+  },
+  {
+    "title": "Dawn of the Dead",
+    "year": 1978,
+    "subgenre": "Zombie"
+  },
+  {
+    "title": "Day of the Dead",
+    "year": 1985,
+    "subgenre": "Zombie"
+  },
+  {
+    "title": "Braindead",
+    "year": 1992,
+    "subgenre": "Zombie"
+  },
+  {
+    "title": "28 Days Later",
+    "year": 2002,
+    "subgenre": "Zombie"
+  },
+  {
+    "title": "Shaun of the Dead",
+    "year": 2004,
+    "subgenre": "Zombie"
+  },
+  {
+    "title": "Train to Busan",
+    "year": 2016,
+    "subgenre": "Zombie"
+  },
+  {
+    "title": "The Invisible Man",
+    "year": 1933,
+    "subgenre": "Sci-Fi Horror"
+  },
+  {
+    "title": "Invasion of the Body Snatchers",
+    "year": 1956,
+    "subgenre": "Sci-Fi Horror"
+  },
+  {
+    "title": "The Fly",
+    "year": 1958,
+    "subgenre": "Sci-Fi Horror"
+  },
+  {
+    "title": "Alien",
+    "year": 1979,
+    "subgenre": "Sci-Fi Horror"
+  },
+  {
+    "title": "The Thing",
+    "year": 1982,
+    "subgenre": "Sci-Fi Horror"
+  },
+  {
+    "title": "The Fly",
+    "year": 1986,
+    "subgenre": "Sci-Fi Horror"
+  },
+  {
+    "title": "Event Horizon",
+    "year": 1997,
+    "subgenre": "Sci-Fi Horror"
+  },
+  {
+    "title": "A Quiet Place",
+    "year": 2018,
+    "subgenre": "Sci-Fi Horror"
+  }
+]
