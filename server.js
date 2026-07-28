@@ -71,8 +71,12 @@ app.get("/protected", (req, res) => {
 // HINT: See W7-S3-Express/9_ServeStatic/exercise/server.js for the solution
 
 // TODO: Serve static files from the 'public' directory
+app.use(express.static("public"));
 
 // TODO: Handle GET request at the root route
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.htm");
+});
 
 // Sync database and start server
 sequelize.sync().then(() => {
