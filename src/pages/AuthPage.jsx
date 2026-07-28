@@ -23,7 +23,7 @@ export default function AuthPage() {
 
       if (res.ok) {
         localStorage.setItem("token", data.token);
-        window.location.href = "/";
+        window.location.href = "/watchlist";
       } else {
         alert(data.message || "Something went wrong");
       }

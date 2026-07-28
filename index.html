@@ -1,70 +1,12 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#510061">
-    <link rel="manifest" href="./manifest.json">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-      const SUPABASE_URL = '';
-      const SUPABASE_KEY = '';
-      window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    </script>
-</head>
-
-<body>
-
-    <!-- Auth overlay -->
-    <div id="auth-overlay" style="display:none;">
-        <div id="auth-card">
-            <img src="./assets/images/todo-icon-192x192.png" width="60px">
-            <h2 id="auth-title">Sign in to create a horror movie watch list</h2>
-            <p id="auth-subtitle"></p>
-            <div class="add-form">
-                <input type="email" id="auth-email" placeholder="Email address" />
-            </div>
-            <div class="add-form">
-                <input type="password" id="auth-password" placeholder="Password" />
-            </div>
-            <button id="auth-submit-btn">Sign In</button>
-            <p id="auth-toggle">Don't have an account? <a href="#" id="auth-switch">Sign Up</a></p>
-            <p id="auth-msg"></p>
-            <hr>
-            <button id="auth-skip-btn">Continue without signing in</button>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <img src="./assets/images/todo-icon-192x192.png" alt="Shadow">
-                <h2 id="sidebar-title" data-suffix="app">Archive of Shadows </h2>
-                <button class="hamburger" id="sidebar-toggle" aria-label="Close menu">✕</button>
-            </div>
-            <ul>
-                <li><a href="#" data-view="home">Home</a></li>
-                <li><a href="#" data-view="all">View Horror Movies</a></li>
-                <li><a href="#" data-view="completed">Movies Watched</a></li>
-                <li><a href="#" data-view="deleted">Movie watch list</a></li>
-                <li><a href="settings.htm">Settings</a></li>
-            </ul>
-        </div>
-
-        <div class="main-content">
-            <div class="mobile-topbar">
-                <button class="hamburger" id="sidebar-open" aria-label="Open menu">☰</button>
-                <span class="mobile-title" id="mobile-title">Horror Films</span>
-            </div>
-            <h1 id="page-title">Horror Lists</h1>
-
-
-    <script src="./assets/js/script.js"></script>
-    <script src="./assets/js/json-io.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archive of Shadows</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
