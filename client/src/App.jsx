@@ -1,15 +1,30 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import AuthPage from "./pages/AuthPage.jsx";
-import Watchlist from "./pages/Watchlist.jsx";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import CourseList from './components/CourseList';
+import CourseDetails from './components/CourseDetails';
+import SubscribedCourses from './components/SubscribedCourses';
 
-export default function App() {
+import { SessionProvider } from './contexts/SessionContext';
+
+const App = () => {
   return (
-    <BrowserRouter>
+    <div>
+      <SessionProvider>
+      <Header />
       <Routes>
-        <Route path="/login" element={<AuthPage />} />
-        <Route path="/watchlist" element={<Watchlist />} />
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<CourseList />} />
+        <Route path="/course/:id" element={<CourseDetails />} />
+        <Route path="/profile" element={<SubscribedCourses />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
-    </BrowserRouter>
+      </SessionProvider>
+    </div>
   );
-}
+};
+
+export default App;

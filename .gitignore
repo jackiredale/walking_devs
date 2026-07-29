@@ -18,5 +18,3 @@ npm-debug.log*
 
 # Data file (optional - see note below)
 data.json
-
-.env
