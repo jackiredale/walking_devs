@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const fs = require("fs");
 const path = require("path");
 const selectedFilms = require("./selectedFilms.json");
@@ -6,134 +7,141 @@ const selectedFilms = require("./selectedFilms.json");
 const token = process.env.TMDB_TOKEN;
 
 if (!token) {
-  console.error("Missing TMDB_TOKEN. Add it to your .env file.");
+  console.error("TMDB_TOKEN is missing from your .env file.");
   process.exit(1);
 }
 
 const headers = {
+  accept: "application/json",
   Authorization: `Bearer ${token}`,
-  accept: "application/json"
 };
 
-async function tmdbGet(url) {
-  const response = await fetch(url, { headers });
+async function fetchFromTMDB(url) {
+  const response = await fetch(url, {
+    method: "GET",
+    headers,
+  });
 
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(`TMDB error ${response.status}: ${message}`);
+    const errorText = await response.text();
+
+    throw new Error(
+      `TMDB request failed: ${response.status} ${response.statusText}\n${errorText}`
+    );
   }
 
   return response.json();
 }
 
-async function searchMovie(title, year) {
-  const params = new URLSearchParams({
-    query: title,
-    primary_release_year: String(year),
-    include_adult: "false",
-    language: "en-GB"
-  });
+async function findMovie(chosenFilm) {
+  const encodedTitle = encodeURIComponent(chosenFilm.title);
 
-  const data = await tmdbGet(
-    `https://api.themoviedb.org/3/search/movie?${params}`
-  );
+  const searchUrl =
+    `https://api.themoviedb.org/3/search/movie` +
+    `?query=${encodedTitle}` +
+    `&primary_release_year=${chosenFilm.year}` +
+    `&language=en-GB`;
 
-  const exactMatch = data.results.find((movie) => {
-    const releaseYear = movie.release_date?.slice(0, 4);
-    const titleMatches =
-      movie.title.toLowerCase() === title.toLowerCase() ||
-      movie.original_title.toLowerCase() === title.toLowerCase();
+  const searchResults = await fetchFromTMDB(searchUrl);
 
-    return titleMatches && releaseYear === String(year);
-  });
+  if (!searchResults.results || searchResults.results.length === 0) {
+    throw new Error(
+      `Could not find ${chosenFilm.title} (${chosenFilm.year})`
+    );
+  }
 
-  return exactMatch || data.results[0] || null;
+  const exactMatch =
+    searchResults.results.find((movie) => {
+      const releaseYear = movie.release_date
+        ? Number(movie.release_date.slice(0, 4))
+        : null;
+
+      return (
+        movie.title.toLowerCase() === chosenFilm.title.toLowerCase() &&
+        releaseYear === chosenFilm.year
+      );
+    }) || searchResults.results[0];
+
+  return exactMatch;
 }
 
 async function getMovieDetails(tmdbId) {
-  const params = new URLSearchParams({
-    language: "en-GB",
-    append_to_response: "credits"
-  });
+  const detailsUrl =
+    `https://api.themoviedb.org/3/movie/${tmdbId}` +
+    `?language=en-GB&append_to_response=credits`;
 
-  return tmdbGet(
-    `https://api.themoviedb.org/3/movie/${tmdbId}?${params}`
-  );
+  return fetchFromTMDB(detailsUrl);
 }
 
 function getDirector(credits) {
-  const director = credits?.crew?.find(
-    (person) => person.job === "Director"
+  if (!credits || !Array.isArray(credits.crew)) {
+    return "Unknown";
+  }
+
+  const director = credits.crew.find(
+    (crewMember) => crewMember.job === "Director"
   );
 
-  return director?.name || "Unknown";
+  return director ? director.name : "Unknown";
 }
 
-async function collectMovies() {
+async function createMovieDatabase() {
   const movies = [];
-  const notFound = [];
 
   for (let index = 0; index < selectedFilms.length; index += 1) {
     const chosenFilm = selectedFilms[index];
 
+    console.log(
+      `[${index + 1}/${selectedFilms.length}] Finding ` +
+        `${chosenFilm.title} (${chosenFilm.year})`
+    );
+
     try {
-      console.log(
-        `[${index + 1}/40] Finding ${chosenFilm.title} (${chosenFilm.year})`
-      );
+      const searchMatch = await findMovie(chosenFilm);
+      const details = await getMovieDetails(searchMatch.id);
 
-      const searchResult = await searchMovie(
-        chosenFilm.title,
-        chosenFilm.year
-      );
-
-      if (!searchResult) {
-        notFound.push(chosenFilm);
-        console.warn(`Not found: ${chosenFilm.title}`);
-        continue;
-      }
-
-      const details = await getMovieDetails(searchResult.id);
+      const releaseYear = details.release_date
+        ? Number(details.release_date.slice(0, 4))
+        : chosenFilm.year;
 
       movies.push({
         id: movies.length + 1,
         tmdbId: details.id,
         title: details.title,
-        description: details.overview || "No description available.",
+        description:
+          details.overview || "No description is currently available.",
         categories: ["Horror", chosenFilm.subgenre],
         director: getDirector(details.credits),
-        runtime: details.runtime,
-        releaseYear: Number(details.release_date?.slice(0, 4)) || chosenFilm.year,
+        runtime: details.runtime || null,
+        releaseYear,
+        averageRating:
+          typeof details.vote_average === "number"
+            ? Number(details.vote_average.toFixed(1))
+            : null,
         posterUrl: details.poster_path
           ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
-          : null
+          : null,
       });
     } catch (error) {
-      notFound.push(chosenFilm);
       console.error(
-        `Could not collect ${chosenFilm.title}: ${error.message}`
+        `Could not add ${chosenFilm.title}: ${error.message}`
       );
     }
   }
 
+  const outputPath = path.join(__dirname, "movies.json");
+
   fs.writeFileSync(
-    path.join(__dirname, "movies.json"),
-    JSON.stringify(movies, null, 2)
+    outputPath,
+    JSON.stringify(movies, null, 2),
+    "utf8"
   );
 
-  if (notFound.length > 0) {
-    fs.writeFileSync(
-      path.join(__dirname, "notFound.json"),
-      JSON.stringify(notFound, null, 2)
-    );
-  }
-
-  console.log(`\nFinished. Saved ${movies.length} films to movies.json.`);
-
-  if (notFound.length > 0) {
-    console.log(
-      `${notFound.length} film(s) were not found. Check notFound.json.`
-    );
-  }
+  console.log(`\nFinished. Added ${movies.length} movies.`);
+  console.log(`Created: ${outputPath}`);
 }
 
-collectMovies();
+createMovieDatabase().catch((error) => {
+  console.error("The program stopped:", error.message);
+  process.exit(1);
+});

@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "description": "Collect 40 selected horror films from TMDB.",
-  "main": "getMovies.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node getMovies.js"
+    "start": "node server.js",
+    "collect": "node getMovies.js"
   },
   "dependencies": {
-    "dotenv": "^17.2.1"
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "cors": "^2.8.5"
   }
 }

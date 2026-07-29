@@ -11,6 +11,7 @@
     "director": "Alfred Hitchcock",
     "runtime": 109,
     "releaseYear": 1960,
+    "averageRating": 8.4,
     "posterUrl": "https://image.tmdb.org/t/p/w500/yz4QVqPx3h1hD1DfqqQkCq3rmxW.jpg"
   },
   {
@@ -25,6 +26,7 @@
     "director": "Tobe Hooper",
     "runtime": 83,
     "releaseYear": 1974,
+    "averageRating": 7.3,
     "posterUrl": "https://image.tmdb.org/t/p/w500/mpgkRPH1GNkMCgdPk2OMyHzAks7.jpg"
   },
   {
@@ -39,6 +41,7 @@
     "director": "Bob Clark",
     "runtime": 98,
     "releaseYear": 1974,
+    "averageRating": 7,
     "posterUrl": "https://image.tmdb.org/t/p/w500/ym0QcbrKNujzDyAU1IHGYUdRWub.jpg"
   },
   {
@@ -53,6 +56,7 @@
     "director": "John Carpenter",
     "runtime": 91,
     "releaseYear": 1978,
+    "averageRating": 7.6,
     "posterUrl": "https://image.tmdb.org/t/p/w500/wijlZ3HaYMvlDTPqJoTCWKFkCPU.jpg"
   },
   {
@@ -67,6 +71,7 @@
     "director": "Sean S. Cunningham",
     "runtime": 95,
     "releaseYear": 1980,
+    "averageRating": 6.4,
     "posterUrl": "https://image.tmdb.org/t/p/w500/uGGpnWHOmWTARVN9wbC1nPxNgps.jpg"
   },
   {
@@ -81,6 +86,7 @@
     "director": "Wes Craven",
     "runtime": 91,
     "releaseYear": 1984,
+    "averageRating": 7.4,
     "posterUrl": "https://image.tmdb.org/t/p/w500/b9rMHAAKISRmIonaQd9Cccx0S4X.jpg"
   },
   {
@@ -95,6 +101,7 @@
     "director": "Tom Holland",
     "runtime": 87,
     "releaseYear": 1988,
+    "averageRating": 6.8,
     "posterUrl": "https://image.tmdb.org/t/p/w500/wvpgvcWNkF2HLuTEMIM7K83MvZ.jpg"
   },
   {
@@ -109,6 +116,7 @@
     "director": "Wes Craven",
     "runtime": 112,
     "releaseYear": 1996,
+    "averageRating": 7.4,
     "posterUrl": "https://image.tmdb.org/t/p/w500/lr9ZIrmuwVmZhpZuTCW8D9g0ZJe.jpg"
   },
   {
@@ -123,6 +131,7 @@
     "director": "Tod Browning",
     "runtime": 74,
     "releaseYear": 1931,
+    "averageRating": 7.2,
     "posterUrl": "https://image.tmdb.org/t/p/w500/ueVSPt7vAba0XScHWTDWS5tNxYX.jpg"
   },
   {
@@ -137,6 +146,7 @@
     "director": "Jack Clayton",
     "runtime": 100,
     "releaseYear": 1961,
+    "averageRating": 7.5,
     "posterUrl": "https://image.tmdb.org/t/p/w500/idqvLBmlEHUITMnQ0EJ6Yb5TpVw.jpg"
   },
   {
@@ -151,6 +161,7 @@
     "director": "Roman Polanski",
     "runtime": 138,
     "releaseYear": 1968,
+    "averageRating": 7.8,
     "posterUrl": "https://image.tmdb.org/t/p/w500/uYgvlHceRFjAFbsNeMInYcLZLUb.jpg"
   },
   {
@@ -165,6 +176,7 @@
     "director": "William Friedkin",
     "runtime": 122,
     "releaseYear": 1973,
+    "averageRating": 7.7,
     "posterUrl": "https://image.tmdb.org/t/p/w500/5x0CeVHJI8tcDx8tUUwYHQSNILq.jpg"
   },
   {
@@ -179,6 +191,7 @@
     "director": "Tobe Hooper",
     "runtime": 114,
     "releaseYear": 1982,
+    "averageRating": 7.2,
     "posterUrl": "https://image.tmdb.org/t/p/w500/4eMN3GANH5GG4kXdHkrTZEUuQ9M.jpg"
   },
   {
@@ -193,6 +206,7 @@
     "director": "Gore Verbinski",
     "runtime": 115,
     "releaseYear": 2002,
+    "averageRating": 6.7,
     "posterUrl": "https://image.tmdb.org/t/p/w500/AeRpUynJKDpJveklBJipOYrVxCS.jpg"
   },
   {
@@ -207,6 +221,7 @@
     "director": "James Wan",
     "runtime": 112,
     "releaseYear": 2013,
+    "averageRating": 7.5,
     "posterUrl": "https://image.tmdb.org/t/p/w500/wVYREutTvI2tmxr6ujrHT704wGF.jpg"
   },
   {
@@ -221,6 +236,7 @@
     "director": "Ari Aster",
     "runtime": 128,
     "releaseYear": 2018,
+    "averageRating": 7.3,
     "posterUrl": "https://image.tmdb.org/t/p/w500/4GFPuL14eXi66V96xBWY73Y9PfR.jpg"
   },
   {
@@ -235,6 +251,7 @@
     "director": "Jacques Tourneur",
     "runtime": 73,
     "releaseYear": 1942,
+    "averageRating": 6.9,
     "posterUrl": "https://image.tmdb.org/t/p/w500/xbe5w7MXOdqsu0ZZRiHHAh6oQlc.jpg"
   },
   {
@@ -249,6 +266,7 @@
     "director": "Michael Powell",
     "runtime": 101,
     "releaseYear": 1960,
+    "averageRating": 7.5,
     "posterUrl": "https://image.tmdb.org/t/p/w500/u36rFrXW7XethWpiEWbRjzfgOc.jpg"
   },
   {
@@ -263,6 +281,7 @@
     "director": "Roman Polanski",
     "runtime": 105,
     "releaseYear": 1965,
+    "averageRating": 7.4,
     "posterUrl": "https://image.tmdb.org/t/p/w500/dtyCKEPLqv9wxyVazL4b843vtUb.jpg"
   },
   {
@@ -277,6 +296,7 @@
     "director": "Stanley Kubrick",
     "runtime": 144,
     "releaseYear": 1980,
+    "averageRating": 8.2,
     "posterUrl": "https://image.tmdb.org/t/p/w500/uAR0AWqhQL1hQa69UDEbb2rE5Wx.jpg"
   },
   {
@@ -291,6 +311,7 @@
     "director": "Rob Reiner",
     "runtime": 107,
     "releaseYear": 1990,
+    "averageRating": 7.8,
     "posterUrl": "https://image.tmdb.org/t/p/w500/klPO5oh1LOxiPpdDXZo1ADgpKcw.jpg"
   },
   {
@@ -305,6 +326,7 @@
     "director": "Jonathan Demme",
     "runtime": 119,
     "releaseYear": 1991,
+    "averageRating": 8.3,
     "posterUrl": "https://image.tmdb.org/t/p/w500/uS9m8OBk1A8eM9I042bx8XXpqAq.jpg"
   },
   {
@@ -319,6 +341,7 @@
     "director": "Alejandro Amenábar",
     "runtime": 101,
     "releaseYear": 2001,
+    "averageRating": 7.6,
     "posterUrl": "https://image.tmdb.org/t/p/w500/p8g1vlTvpM6nr2hMMiZ1fUlKF0D.jpg"
   },
   {
@@ -333,6 +356,7 @@
     "director": "Jordan Peele",
     "runtime": 104,
     "releaseYear": 2017,
+    "averageRating": 7.6,
     "posterUrl": "https://image.tmdb.org/t/p/w500/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg"
   },
   {
@@ -347,6 +371,7 @@
     "director": "Victor Halperin",
     "runtime": 67,
     "releaseYear": 1932,
+    "averageRating": 6,
     "posterUrl": "https://image.tmdb.org/t/p/w500/s5DnfWHGeCExlweIFF4JOHKyx3H.jpg"
   },
   {
@@ -361,6 +386,7 @@
     "director": "George A. Romero",
     "runtime": 96,
     "releaseYear": 1968,
+    "averageRating": 7.6,
     "posterUrl": "https://image.tmdb.org/t/p/w500/rb2NWyb008u1EcKCOyXs2Nmj0ra.jpg"
   },
   {
@@ -375,6 +401,7 @@
     "director": "George A. Romero",
     "runtime": 127,
     "releaseYear": 1978,
+    "averageRating": 7.5,
     "posterUrl": "https://image.tmdb.org/t/p/w500/70MY8H0bLMvXf8ED2SgVMPhDVVM.jpg"
   },
   {
@@ -389,6 +416,7 @@
     "director": "George A. Romero",
     "runtime": 101,
     "releaseYear": 1985,
+    "averageRating": 7,
     "posterUrl": "https://image.tmdb.org/t/p/w500/bi7SO5F4VyyGQTlxQirbH1dwKzW.jpg"
   },
   {
@@ -403,6 +431,7 @@
     "director": "Peter Jackson",
     "runtime": 103,
     "releaseYear": 1992,
+    "averageRating": 7.4,
     "posterUrl": "https://image.tmdb.org/t/p/w500/pa39D8TQs6aNw3hiUs4jLjHVUB0.jpg"
   },
   {
@@ -417,6 +446,7 @@
     "director": "Danny Boyle",
     "runtime": 113,
     "releaseYear": 2002,
+    "averageRating": 7.2,
     "posterUrl": "https://image.tmdb.org/t/p/w500/sQckQRt17VaWbo39GIu0TMOiszq.jpg"
   },
   {
@@ -431,6 +461,7 @@
     "director": "Edgar Wright",
     "runtime": 99,
     "releaseYear": 2004,
+    "averageRating": 7.5,
     "posterUrl": "https://image.tmdb.org/t/p/w500/dgXPhzNJH8HFTBjXPB177yNx6RI.jpg"
   },
   {
@@ -445,6 +476,7 @@
     "director": "Yeon Sang-ho",
     "runtime": 118,
     "releaseYear": 2016,
+    "averageRating": 7.8,
     "posterUrl": "https://image.tmdb.org/t/p/w500/vNVFt6dtcqnI7hqa6LFBUibuFiw.jpg"
   },
   {
@@ -459,6 +491,7 @@
     "director": "James Whale",
     "runtime": 71,
     "releaseYear": 1933,
+    "averageRating": 7.5,
     "posterUrl": "https://image.tmdb.org/t/p/w500/ewfUA5pMEJrmQCdI4TsHmLlIUbf.jpg"
   },
   {
@@ -473,6 +506,7 @@
     "director": "Don Siegel",
     "runtime": 80,
     "releaseYear": 1956,
+    "averageRating": 7.5,
     "posterUrl": "https://image.tmdb.org/t/p/w500/8BrMQmgwGzIHSyBjCDOLOdi79fJ.jpg"
   },
   {
@@ -487,6 +521,7 @@
     "director": "Kurt Neumann",
     "runtime": 94,
     "releaseYear": 1958,
+    "averageRating": 7,
     "posterUrl": "https://image.tmdb.org/t/p/w500/kXdBcDh2EbgSIf4Oo1dxKapZM2f.jpg"
   },
   {
@@ -501,6 +536,7 @@
     "director": "Ridley Scott",
     "runtime": 117,
     "releaseYear": 1979,
+    "averageRating": 8.2,
     "posterUrl": "https://image.tmdb.org/t/p/w500/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg"
   },
   {
@@ -515,6 +551,7 @@
     "director": "John Carpenter",
     "runtime": 109,
     "releaseYear": 1982,
+    "averageRating": 8.1,
     "posterUrl": "https://image.tmdb.org/t/p/w500/ob1NaOSYDC4iBaFkTgIUecaMFGT.jpg"
   },
   {
@@ -529,6 +566,7 @@
     "director": "David Cronenberg",
     "runtime": 96,
     "releaseYear": 1986,
+    "averageRating": 7.4,
     "posterUrl": "https://image.tmdb.org/t/p/w500/8gZWMhJHRvaXdXsNhERtqNHYpH3.jpg"
   },
   {
@@ -543,6 +581,7 @@
     "director": "Paul W. S. Anderson",
     "runtime": 96,
     "releaseYear": 1997,
+    "averageRating": 6.6,
     "posterUrl": "https://image.tmdb.org/t/p/w500/cHoeg3gAD5w63Et5DImY1Jb7HaO.jpg"
   },
   {
@@ -557,6 +596,277 @@
     "director": "John Krasinski",
     "runtime": 91,
     "releaseYear": 2018,
+    "averageRating": 7.4,
     "posterUrl": "https://image.tmdb.org/t/p/w500/nAU74GmpUk7t5iklEp3bufwDq4n.jpg"
+  },
+  {
+    "id": 41,
+    "tmdbId": 3035,
+    "title": "Frankenstein",
+    "description": "Henry Frankenstein pieces together body parts in the hope of bringing a human-like creature to life. The mad scientist’s dreams are shattered by his monstrous creation awakening with rage to a world that hates and fears him.",
+    "categories": [
+      "Horror",
+      "Sci-Fi Horror"
+    ],
+    "director": "James Whale",
+    "runtime": 70,
+    "releaseYear": 1931,
+    "averageRating": 7.5,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/mu6wHwH0IwCCaEYtpqujuPJYat1.jpg"
+  },
+  {
+    "id": 42,
+    "tmdbId": 229,
+    "title": "Bride of Frankenstein",
+    "description": "Dr. Frankenstein and his monster both turn out to be alive after being attacked by an angry mob. The now-chastened scientist attempts to escape his past, but a former mentor forces him to assist with the creation of a new creature.",
+    "categories": [
+      "Horror",
+      "Sci-Fi Horror"
+    ],
+    "director": "James Whale",
+    "runtime": 75,
+    "releaseYear": 1935,
+    "averageRating": 7.5,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/5241zUwe7rC17MNc2QpCBKKdp1N.jpg"
+  },
+  {
+    "id": 43,
+    "tmdbId": 11772,
+    "title": "The Haunting",
+    "description": "Dr. John Markway recruits three strangers for a sleep-disorder study at the eerie and isolated Hill House. It soon becomes clear his real interest lies in the mansion itself and its sinister history, as they are forced to confront the nature of its horror…",
+    "categories": [
+      "Horror",
+      "Supernatural"
+    ],
+    "director": "Robert Wise",
+    "runtime": 112,
+    "releaseYear": 1963,
+    "averageRating": 7.1,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/fmpTnUKTcrpuxLSY23gQMUf9qu7.jpg"
+  },
+  {
+    "id": 44,
+    "tmdbId": 16307,
+    "title": "The Wicker Man",
+    "description": "Police sergeant Neil Howie is called to an island village in search of a missing girl whom the locals claim never existed. The investigation is further complicated as Howie’s religious views clash with those of the island’s residents.",
+    "categories": [
+      "Horror",
+      "Psychological"
+    ],
+    "director": "Robin Hardy",
+    "runtime": 93,
+    "releaseYear": 1973,
+    "averageRating": 7.3,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/wwtrXRL8SiOWxhwLEvw7iBgYh0g.jpg"
+  },
+  {
+    "id": 45,
+    "tmdbId": 7340,
+    "title": "Carrie",
+    "description": "Withdrawn and sensitive teenager Carrie White faces bullying from her classmates and abuse from her fanatically pious mother. When she begins to suspect that she has supernatural powers, things take a dark and violent turn.",
+    "categories": [
+      "Horror",
+      "Supernatural"
+    ],
+    "director": "Brian De Palma",
+    "runtime": 98,
+    "releaseYear": 1976,
+    "averageRating": 7.3,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/8tT1rqlsTguyfUBMrbHR9cv1rxM.jpg"
+  },
+  {
+    "id": 46,
+    "tmdbId": 11906,
+    "title": "Suspiria",
+    "description": "An American newcomer to a prestigious German ballet academy comes to realize that the school is a front for something sinister amid a series of grisly murders.",
+    "categories": [
+      "Horror",
+      "Supernatural"
+    ],
+    "director": "Dario Argento",
+    "runtime": 99,
+    "releaseYear": 1977,
+    "averageRating": 7.5,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/sEcvc9h1X3hYZdFgtiiKMm6RB3f.jpg"
+  },
+  {
+    "id": 47,
+    "tmdbId": 11850,
+    "title": "Invasion of the Body Snatchers",
+    "description": "The residents of San Francisco are becoming drone-like shadows of their former selves, and as the phenomenon spreads, two Department of Health workers uncover the horrifying truth.",
+    "categories": [
+      "Horror",
+      "Sci-Fi Horror"
+    ],
+    "director": "Philip Kaufman",
+    "runtime": 116,
+    "releaseYear": 1978,
+    "averageRating": 7.2,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/skS02wdeH2C0nrbCQP3qKwJdZtZ.jpg"
+  },
+  {
+    "id": 48,
+    "tmdbId": 1694,
+    "title": "Re-Animator",
+    "description": "Conducting clandestine experiments within the morgue at Miskatonic University, scientist Herbert West reveals to a fellow graduate student his groundbreaking work concerning the re-animation of fresh corpses.",
+    "categories": [
+      "Horror",
+      "Sci-Fi Horror"
+    ],
+    "director": "Stuart Gordon",
+    "runtime": 86,
+    "releaseYear": 1985,
+    "averageRating": 7.1,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/7FYhY70LTumoFfQgTI8TK0UDdsF.jpg"
+  },
+  {
+    "id": 49,
+    "tmdbId": 9003,
+    "title": "Hellraiser",
+    "description": "A hedonistic man finds a mysterious puzzle box that summons a group of gruesome beings known as the Cenobites. These otherworldly entities open the doors to a dominion where pain and pleasure are indivisible.",
+    "categories": [
+      "Horror",
+      "Supernatural"
+    ],
+    "director": "Clive Barker",
+    "runtime": 93,
+    "releaseYear": 1987,
+    "averageRating": 6.9,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/3Z0oPHyLnk3Vx6ZMC1MiVwIrKhO.jpg"
+  },
+  {
+    "id": 50,
+    "tmdbId": 9529,
+    "title": "Candyman",
+    "description": "The Candyman, a murderous soul with a hook for a hand, is accidentally summoned to reality by a skeptic grad student researching the monster's myth.",
+    "categories": [
+      "Horror",
+      "Slasher"
+    ],
+    "director": "Bernard Rose",
+    "runtime": 100,
+    "releaseYear": 1992,
+    "averageRating": 6.7,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/jQtgkgDZE7egMq532sOt83DnT83.jpg"
+  },
+  {
+    "id": 51,
+    "tmdbId": 2671,
+    "title": "Ring",
+    "description": "A mysterious video has been linked to a number of deaths, and when an inquisitive journalist finds the tape and views it herself, she sets in motion a chain of events that puts her own life in danger.",
+    "categories": [
+      "Horror",
+      "Supernatural"
+    ],
+    "director": "Hideo Nakata",
+    "runtime": 96,
+    "releaseYear": 1998,
+    "averageRating": 7.1,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/1YINof6kN5yRdePEbcU5360ejoq.jpg"
+  },
+  {
+    "id": 52,
+    "tmdbId": 2667,
+    "title": "The Blair Witch Project",
+    "description": "In October of 1994 three student filmmakers disappeared in the woods near Burkittsville, Maryland, while shooting a documentary. A year later their footage was found.",
+    "categories": [
+      "Horror",
+      "Supernatural"
+    ],
+    "director": "Daniel Myrick",
+    "runtime": 81,
+    "releaseYear": 1999,
+    "averageRating": 6.4,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/9050VGrYjYrEjpOvDZVAngLbg1f.jpg"
+  },
+  {
+    "id": 53,
+    "tmdbId": 176,
+    "title": "Saw",
+    "description": "Two men wake up to find themselves shackled in a grimy, abandoned bathroom. As they struggle to comprehend their predicament, they discover a disturbing tape left behind by the sadistic mastermind known as Jigsaw. With a chilling voice and cryptic instructions, Jigsaw informs them that they must partake in a gruesome game in order to secure their freedom.",
+    "categories": [
+      "Horror",
+      "Slasher"
+    ],
+    "director": "James Wan",
+    "runtime": 103,
+    "releaseYear": 2004,
+    "averageRating": 7.4,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/rLNSOudrayDBo1uqXjrhxcjODIC.jpg"
+  },
+  {
+    "id": 54,
+    "tmdbId": 9392,
+    "title": "The Descent",
+    "description": "After a personal tragedy, Sarah joins her friends on a caving expedition in the Appalachian Mountains. But when a rockfall traps them deep underground, their adventure turns into a nightmare. As they search for a way out, the group discovers they are not alone—lurking in the darkness are savage, cave-dwelling creatures. With rising tension and dwindling trust, the women must fight to survive against both the predators and each other.",
+    "categories": [
+      "Horror",
+      "Psychological"
+    ],
+    "director": "Neil Marshall",
+    "runtime": 100,
+    "releaseYear": 2005,
+    "averageRating": 7,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/mxFPI4KYBk5ri9cPteIS8jiDFgj.jpg"
+  },
+  {
+    "id": 55,
+    "tmdbId": 8329,
+    "title": "[REC]",
+    "description": "A television reporter and cameraman follow emergency workers into a dark apartment building and are quickly locked inside with something terrifying.",
+    "categories": [
+      "Horror",
+      "Zombie"
+    ],
+    "director": "Jaume Balagueró",
+    "runtime": 78,
+    "releaseYear": 2007,
+    "averageRating": 7.2,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/hgyJR4sgMsee6xMFM3xYiG6cDCh.jpg"
+  },
+  {
+    "id": 56,
+    "tmdbId": 526667,
+    "title": "The Witch",
+    "description": "A summer youth camp by the sea. Tonya, a quiet, reserved, and gullible girl, becomes neighbors with Lyudka, who is vibrant, assertive, and calculating. They both fall in love with the same boy. Suddenly, it turns out that Tonya possesses supernatural abilities she cannot control.",
+    "categories": [
+      "Horror",
+      "Supernatural"
+    ],
+    "director": "Dmitry Fedorov",
+    "runtime": 90,
+    "releaseYear": 2015,
+    "averageRating": 7.7,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/inBpHrLEgLDEZ6A8ZWkg3WS1XKw.jpg"
+  },
+  {
+    "id": 57,
+    "tmdbId": 570670,
+    "title": "The Invisible Man",
+    "description": "When Cecilia's abusive ex takes his own life and leaves her his fortune, she suspects his death was a hoax. As a series of coincidences turn lethal, Cecilia works to prove that she is being hunted by someone nobody can see.",
+    "categories": [
+      "Horror",
+      "Psychological"
+    ],
+    "director": "Leigh Whannell",
+    "runtime": 124,
+    "releaseYear": 2020,
+    "averageRating": 7.1,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/5EufsDwXdY2CVttYOk2WtYhgKpa.jpg"
+  },
+  {
+    "id": 58,
+    "tmdbId": 1118584,
+    "title": "Talk to Me",
+    "description": "Farid, who works abroad, locks himself on the last day of his stay in Beirut in his son Rawad's room, to find what he is hiding there. Separated by a locked door, the dysfunctional dynamic between them intensifies, and the past resurfaces.",
+    "categories": [
+      "Horror",
+      "Supernatural"
+    ],
+    "director": "Ribal Chedid",
+    "runtime": 21,
+    "releaseYear": 2022,
+    "averageRating": 0,
+    "posterUrl": "https://image.tmdb.org/t/p/w500/9t7gUKSxXjvQpgHdC7VUhJ1BTBK.jpg"
   }
 ]
