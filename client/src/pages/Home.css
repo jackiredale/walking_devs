@@ -1,0 +1,12 @@
+.homepage { padding: 24px; }
+.site-header, .filter-nav, .search-bar, .featured-movie, .movie-grid { border: 1px solid #ccc; margin-bottom: 24px; padding: 16px; }
+.site-header, .filter-nav, .search-bar { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+.site-header { justify-content: space-between; }
+.site-header nav { display: flex; gap: 16px; }
+.featured-movie { display: grid; grid-template-columns: 280px 1fr; gap: 24px; }
+.featured-movie > p { grid-column: 1 / -1; }
+.featured-movie img, .movie-card img { width: 100%; }
+.movie-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+@media (max-width: 700px) { .featured-movie { grid-template-columns: 1fr; } }
+.homepage, .homepage a, .homepage button, .homepage input, .homepage select { color: white; }
+.homepage input, .homepage select, .homepage button { background: transparent; }
