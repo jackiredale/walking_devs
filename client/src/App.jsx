@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthPage from "./pages/AuthPage.jsx";
 import Watchlist from "./pages/Watchlist.jsx";
 import Navbar from './components/Navbar';

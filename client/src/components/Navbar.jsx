@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/logo.png';
+// import logo from '../assets/logo.png'; might come back to later
 import { useStateContext } from '../contexts/StateContext';
 import { Link, useNavigate } from 'react-router-dom';
 
