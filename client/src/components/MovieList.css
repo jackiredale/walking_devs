@@ -1,0 +1,9 @@
+.movie-grid{
+    display: flex;
+    flex-flow: row wrap;
+
+}
+.movie-grid img{
+   max-width: 200px;
+    
+}

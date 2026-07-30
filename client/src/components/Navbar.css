@@ -1,0 +1,46 @@
+.NavBar{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.LogoLink{
+    text-align: left;
+}
+
+/* Form Styles */
+.SearchBar {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.SearchBar h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.SearchBar input {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.SearchBar button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.SearchBar button:hover {
+    background-color: #555;
+}
