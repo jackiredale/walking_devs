@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSession } from "../contexts/SessionContext";
 import "./AuthPage.css";
 
 export default function AuthPage() {
   const [mode, setMode] = useState("login"); // "login" | "register"
   const [form, setForm] = useState({ email: "", password: "", confirmPassword: "" });
+  const { setUser } = useSession();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,8 +26,12 @@ export default function AuthPage() {
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem("token", data.token);
-        window.location.href = "/watchlist";
+        localStorage.setItem("authToken", data.token);
+        setUser({
+          username: data.user.username,
+          id: data.user.id,
+        });
+        navigate("/");
       } else {
         alert(data.message || "Something went wrong");
       }

@@ -17,15 +17,15 @@ function Navbar() {
     sortBy, setSortBy,
   } = useStateContext();
 
-  const { user } = useSession();
+  const { user, setUser } = useSession();
 
   //handles login function
   const navigate = useNavigate();
-  const token = localStorage.getItem('authToken');
 
-   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    navigate('/login');
+  const handleLogout = () => {
+  localStorage.removeItem('authToken');
+  setUser({});
+  navigate('/login');
   };
 
   return (
@@ -41,16 +41,16 @@ function Navbar() {
        <nav className='TopNav'>
               <Link to="/">Films</Link>
               <Link to="/watchlist">Watchlist</Link>
-              {token ? (
+              {user?.id ? (
                 <>
-                  <Link to="/profile">Login</Link>
-                  <button onClick={handleLogout}>Logout</button>
+              <Link to="/profile">Profile</Link>
+              <button onClick={handleLogout}>Logout</button>
                 </>
-              ) : (
-                <>
-                  <Link to="/login">Login/Signup</Link>
-                </>
-              )}
+                    ) : (
+                          <>
+         <Link to="/login">Login/Signup</Link>
+          </>
+)}
       </nav>
       </div>
 
