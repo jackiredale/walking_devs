@@ -36,7 +36,7 @@ function Navbar() {
         {/* <img src={logo} alt="logo icon" data-testid="logo-img" /> */}
       </Link>
 
-       <nav>
+       <nav className='TopNav'>
               <Link to="/">Films</Link>
               <Link to="/watchlist">Watchlist</Link>
               {token ? (
@@ -51,6 +51,7 @@ function Navbar() {
               )}
       </nav>
 
+<div className="SearchBar--wrapper">
   <form onSubmit={handleFormSubmit} className="SearchBar" data-testid="search-bar">
   <div className="field field-term">
     <label htmlFor="search-input">Search term</label>
@@ -103,7 +104,7 @@ function Navbar() {
 
   <button type="submit">Search →</button>
 </form>
-      
+      </div>
     </div>
   );
 };

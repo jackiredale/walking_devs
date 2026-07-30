@@ -17,14 +17,8 @@
   --accent:        #c3162c;
   --accent-dim:    #7a0f1d;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-
-
-    --font-display:  'Bitter', Georgia, serif;
-    --font-ui:       'Oswald', 'Arial Narrow', sans-serif;
+--heading: 'BioRhyme', Georgia, serif;
+--mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
 
     --gap:           1.5rem;
     --radius:        2px;

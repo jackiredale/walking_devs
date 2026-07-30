@@ -10,24 +10,53 @@
 
 .LogoLink{
     text-align: left;
+    padding: 0 1rem;
+    margin: 2rem 1rem;
 }
 .LogoLink h1{
-
+text-transform: uppercase;
+font-size: 1.5rem;
+font-weight: 800;
+letter-spacing: 0.1rem;
+font-family: var(--heading);
+margin: 0;
 }
 .LogoLink p{
+font-family: var(--mono);
+font-size: 1rem;
+font-weight: 800;
+letter-spacing: 0.1rem;
+color: var(--text-dim);
 }
 /* Search bar styles */
+.TopNav{
+    margin: 0 auto 2rem;
+}
+.TopNav a{
+    margin: 1rem;
+    color: var(--text);
+    text-transform: uppercase;
+    font-family: var(--mono);
+    font-size: 1rem;
+}
 
+
+/* Search bar styles */
+.SearchBar--wrapper{
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+  margin-bottom: 2rem;
+}
 .SearchBar {
   display: flex;
   width: 100%;
   margin: 0 auto;
   flex-wrap: wrap;
   gap: 1rem;
-  background: var(--bg-panel);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 1rem 1.25rem;
+  padding: 2rem;
+  max-width: 1200px;
 }
 
 .field {
@@ -45,10 +74,10 @@
   display: block;
   font-size: .68rem;
   letter-spacing: .14em;
-  text-transform: uppercase;
   color: var(--text-dim);
   margin-bottom: .5rem;
   text-align: left;
+  text-transform: capitalize;
 }
 
 .field input,
@@ -89,7 +118,7 @@
 }
 
 @media (min-width: 860px) {
-  .SearchBar { align-items: end; flex-wrap: nowrap;  }
+  .SearchBar { align-items: end; flex-wrap: nowrap;  padding: 2rem;}
   .field:first-of-type { flex: 2 1 0; }
   .field { flex: 1 1 0; }
   .SearchBar button[type="submit"] { flex: 0 0 auto; white-space: nowrap; }
