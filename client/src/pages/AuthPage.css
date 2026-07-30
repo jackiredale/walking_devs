@@ -1,0 +1,123 @@
+.auth-page {
+  background: #141414;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: "Arial", sans-serif;
+}
+
+.auth-panel {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  min-height: 440px;
+  background: #1f1f1f;
+}
+
+.auth-visual {
+  flex: 0 0 45%;
+  background: #8c1010;
+  background-image: linear-gradient(160deg, #8c1010 0%, #5c0a0a 100%);
+}
+
+.auth-form-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 3rem;
+}
+
+.auth-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.tab {
+  background: none;
+  border: none;
+  color: #888;
+  text-align: left;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.tab.active {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  color: #999;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.field input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #444;
+  color: #fff;
+  font-size: 0.95rem;
+  padding: 0.4rem 0;
+  outline: none;
+}
+
+.field input:focus {
+  border-bottom-color: #8c1010;
+}
+
+.auth-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.auth-footer a {
+  color: #999;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  color: #ccc;
+}
+
+.btn-auth {
+  background: #8c1010;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.75rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-auth:hover {
+  background: #a51414;
+}

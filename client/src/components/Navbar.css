@@ -1,0 +1,132 @@
+.NavBar{
+}
+.NavBar a{
+    text-decoration: none;
+}
+.Header{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1366px;
+    margin: 0 auto;
+}
+
+.LogoLink{
+    text-align: left;
+    padding: 0 1rem;
+    margin: 2rem 1rem;
+}
+.LogoLink h1{
+text-transform: uppercase;
+font-size: 1.5rem;
+font-weight: 800;
+letter-spacing: 0.1rem;
+font-family: var(--heading);
+margin: 0;
+}
+.LogoLink p{
+font-family: var(--mono);
+font-size: 1rem;
+font-weight: 800;
+letter-spacing: 0.1rem;
+color: var(--text-dim);
+}
+/* Search bar styles */
+.TopNav{
+    margin: 0 auto 2rem;
+}
+.TopNav a{
+    margin: 1rem;
+    color: var(--text);
+    text-transform: uppercase;
+    font-family: var(--mono);
+    font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+.TopNav{ margin: 0 1rem 0 0;}
+}
+
+/* Search bar styles */
+.SearchBar--wrapper{
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+  margin-bottom: 2rem;
+}
+.SearchBar {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 2rem;
+  max-width: 1200px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 calc(50% - .5rem);
+}
+
+/* search term = first field, always full width */
+.field:first-of-type {
+  flex: 1 1 100%;
+}
+
+.field label {
+  display: block;
+  font-size: .68rem;
+  letter-spacing: .14em;
+  color: var(--text-dim);
+  margin-bottom: .5rem;
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: .65rem .75rem;
+  font-size: .82rem;
+  border-radius: 2px;
+  appearance: none;
+}
+
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%239c9a97'%3E%3Cpath d='M5 7l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .6rem center;
+  background-size: 16px;
+}
+
+.SearchBar button[type="submit"] {
+  flex: 1 1 100%;
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  padding: .72rem 1.4rem;
+  font-size: .8rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.SearchBar button[type="submit"]:hover { background: #a30f22; }
+
+@media (min-width: 640px) {
+  .field { flex: 1 1 calc(33.333% - .67rem); }
+  .SearchBar button[type="submit"] { flex: 1 1 calc(50% - .5rem); }
+}
+
+@media (min-width: 768px) {
+  .SearchBar { align-items: end; flex-wrap: nowrap;  padding: 2rem;}
+  .field:first-of-type { flex: 2 1 0; }
+  .field { flex: 1 1 0; }
+  .SearchBar button[type="submit"] { flex: 0 0 auto; white-space: nowrap; }
+}

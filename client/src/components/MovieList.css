@@ -1,0 +1,26 @@
+.movie-grid{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    max-width: 1366px;
+    margin: 0 auto;
+}
+.movie-grid img{
+   max-width: 200px;
+}
+.movie-card{
+    margin: 0 0 1rem;
+}
+.movie-title {
+    font-family: var(--heading);
+    font-size: .85rem;
+    color: var(--text);
+    font-weight: 500;
+    margin: 0.2rem 0 .2rem;
+}
+.movie-year {
+    font-family: var(--mono);
+    font-size: .76rem;
+    color: var(--text-faint);
+    margin: 0;
+}
