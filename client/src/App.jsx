@@ -1,15 +1,32 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthPage from "./pages/AuthPage.jsx";
 import Watchlist from "./pages/Watchlist.jsx";
+import Navbar from './components/Navbar';
+import MovieList from './components/MovieList';
+import CourseDetails from './components/CourseDetails';
 
-export default function App() {
+import { StateContext } from './contexts/StateContext';
+import { SessionProvider } from './contexts/SessionContext';
+
+const App = () => {
   return (
-    <BrowserRouter>
+    <div>
+       <BrowserRouter>
+      <SessionProvider>
+      <StateContext>
+      <Navbar />
       <Routes>
         <Route path="/login" element={<AuthPage />} />
         <Route path="/watchlist" element={<Watchlist />} />
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<MovieList />} />
+        <Route path="/course/:id" element={<CourseDetails />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
-    </BrowserRouter>
+      </StateContext>
+      </SessionProvider>
+      </BrowserRouter>
+    </div>
   );
 }
+
+export default App;
