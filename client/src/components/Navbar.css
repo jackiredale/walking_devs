@@ -1,11 +1,15 @@
 .NavBar{
+}
+.NavBar a{
+    text-decoration: none;
+}
+.Header{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
-}
-.NavBar a{
-    text-decoration: none;
+    max-width: 1366px;
+    margin: 0 auto;
 }
 
 .LogoLink{
@@ -40,6 +44,9 @@ color: var(--text-dim);
     font-size: 1rem;
 }
 
+@media (min-width: 768px) {
+.TopNav{ margin: 0 1rem 0 0;}
+}
 
 /* Search bar styles */
 .SearchBar--wrapper{
@@ -117,7 +124,7 @@ color: var(--text-dim);
   .SearchBar button[type="submit"] { flex: 1 1 calc(50% - .5rem); }
 }
 
-@media (min-width: 860px) {
+@media (min-width: 768px) {
   .SearchBar { align-items: end; flex-wrap: nowrap;  padding: 2rem;}
   .field:first-of-type { flex: 2 1 0; }
   .field { flex: 1 1 0; }

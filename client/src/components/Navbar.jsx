@@ -30,6 +30,8 @@ function Navbar() {
 
   return (
     <div className="NavBar" data-testid="navbar">
+
+      <div className='Header'>
       <Link to={"/"} className="LogoLink" data-testid="logo-link">
       <h1>Archive of Shadows</h1>
       <p>by the walking devs</p>
@@ -50,6 +52,7 @@ function Navbar() {
                 </>
               )}
       </nav>
+      </div>
 
 <div className="SearchBar--wrapper">
   <form onSubmit={handleFormSubmit} className="SearchBar" data-testid="search-bar">

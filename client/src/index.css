@@ -67,6 +67,9 @@ body {
   padding: 0;
 }
 
+body a{
+text-decoration: none;
+}
 #root {
   max-width: 100%;
   margin: 0 auto;

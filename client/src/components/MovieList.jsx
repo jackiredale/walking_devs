@@ -15,8 +15,8 @@ function MovieList() {
           src={`${baseImageUrl}${movie.poster_path}`}
           alt={movie.title}
         />
-         <h3>{movie.title}</h3>
-         <p>{movie.release_date?.slice(0, 4)}</p>
+         <h3 className='movie-title'>{movie.title}</h3>
+         <p className='movie-year'>{movie.release_date?.slice(0, 4)}</p>
          </Link>
       ))}
     </div>
