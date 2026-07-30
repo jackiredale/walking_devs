@@ -2,8 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: #000;
+    padding: 0;    
 }
 
 header {
@@ -50,9 +49,7 @@ header nav button:hover {
 
 
 /* Course List Styles */
-div {
-    padding: 20px;
-}
+
 
 h2 {
     margin-top: 0;
