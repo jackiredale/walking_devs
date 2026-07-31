@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-
+import { discoverByHorrorSubcategory } from "../utils/horrorSubcategories";
 import loader from "../assets/loader.gif";
 
 const Context = createContext();
@@ -23,6 +23,8 @@ export const StateContext = ({ children }) => {
   const [genre, setGenre] = useState("");
   const [genreList, setGenreList] = useState([]);
   const [sortBy, setSortBy] = useState("popularity.desc");
+  const [subcategory, setSubcategory] = useState("");//create a subcat for movie cats
+  const [year, setYear] = useState("");
 
   // fetches TMDB's full genre list once, on page load
 
@@ -43,6 +45,26 @@ export const StateContext = ({ children }) => {
       .then((responseData) => setData(responseData))
       .catch(() => setError("Error fetching movies by genre"));
   }, [genre, sortBy]);
+
+  //This runs the cat navigation to filter the movies - see FilterDropdown.jsx
+  useEffect(() => {
+    if (query || !subcategory) return;
+    setData([]);
+    discoverByHorrorSubcategory(subcategory, { apiUrl, apiKey })
+      .then((responseData) => setData(responseData))
+      .catch(() => setError("Error fetching movies by subcategory"));
+  }, [subcategory]);
+
+  //This gives options to the year dropdown in the searchbar
+  useEffect(() => {
+  if (query || !year) return;
+  setData([]);
+  fetch(`${apiUrl}/discover/movie?with_genres=27&primary_release_year=${year}&api_key=${apiKey}`)
+    .then((response) => response.json())
+    .then((responseData) => setData(responseData))
+    .catch(() => setError("Error fetching movies by year"));
+}, [year]);
+
 
   // default trending list — shown when there's no active search
   const displayMovies = () => {
@@ -154,6 +176,10 @@ export const StateContext = ({ children }) => {
         genreList,
         sortBy,
         setSortBy,
+        subcategory,
+        setSubcategory,
+        year,
+        setYear,
       }}
     >
       {children}

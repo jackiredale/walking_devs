@@ -4,7 +4,6 @@
 export const HORROR_GENRE_ID = 27; // TMDB's genre id for "Horror"
 
 export const HORROR_SUBCATEGORIES = [
-  "Silent Era",
   "Slasher",
   "Supernatural",
   "Occult",
@@ -22,7 +21,9 @@ export function discoverByHorrorSubcategory(label, { apiUrl, apiKey }) {
   return fetch(`${apiUrl}/search/keyword?query=${term}&api_key=${apiKey}`)
     .then((response) => response.json())
     .then((keywordData) => {
+      
       const keywordId = keywordData.results?.[0]?.id;
+      // console.log(label, "→ matched keyword:", keywordData.results?.[0]);
 
       if (!keywordId) {
         return { results: [] }; // no matching TMDB keyword for this label

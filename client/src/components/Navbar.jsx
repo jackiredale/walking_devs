@@ -18,6 +18,10 @@ function Navbar() {
     sortBy, setSortBy,
   } = useStateContext();
 
+    //An array method to add make options for the year ddm
+  const years = Array.from({ length: 131 }, (_, i) => new Date().getFullYear() - i);
+  const yearOptions = years.map((y) => <option key={y} value={y}>{y}</option>);
+
   const { user } = useSession();
 
   //handles login function
@@ -76,6 +80,7 @@ function Navbar() {
     <label htmlFor="year">Year</label>
     <select id="year" value={year} onChange={(e) => setYear(e.target.value)}>
       <option value="">Year</option>
+       {yearOptions}
     </select>
   </div>
 
