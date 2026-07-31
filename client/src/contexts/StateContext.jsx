@@ -94,18 +94,22 @@ export const StateContext = ({ children }) => {
     }
   }, [query]);
 
-  // Search handles
-
+  //updates query whenever you type something in the search box
   const handleInputChange = (event) => {
     const queries = event.target.value;
     setQuery(queries);
   };
-
+  // runs the search using whatever's in query right now
   const handleSubmit = () => {
     setData([]);
     fetch(`${apiUrl}/search/movie?query=${query}&api_key=${apiKey}`)
       .then((response) => response.json())
-      .then((responseData) => setData(responseData))
+      .then((responseData) => {
+      const horrorOnly = (responseData.results || []).filter((movie) =>
+        movie.genre_ids?.includes(27)
+      );
+      setData({ ...responseData, results: horrorOnly });
+      })
       .catch((error) => setError("Error searching for movies:", error));
   };
 
