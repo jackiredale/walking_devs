@@ -14,7 +14,7 @@ function Navbar() {
   //pull in search rules from StateContext.jsx
   const {
     handleFormSubmit, query, handleInputChange,
-    year, setYear,
+    decade, setDecade,
     subcategory, setSubcategory,
     certificate, setCertificate,
     sortBy, setSortBy,
@@ -22,11 +22,12 @@ function Navbar() {
 
   // YEAR SEARCH DROPDOWN - A for loop to add options for the year ddm
   const currentYear = new Date().getFullYear();
-  const years = [];
-  for (let y = currentYear; y >= currentYear - 131; y--) {
-    years.push(y);
+  const currentDecade = Math.floor(currentYear / 10) * 10;
+  const decades = [];
+  for (let d = currentDecade; d >= 1890; d -= 10) {
+    decades.push(d);
   }
-  const yearOptions = years.map((y) => <option key={y} value={y}>{y}</option>);
+  const decadeOptions = decades.map((d) => <option key={d} value={d}>{d}s</option>);
 
   const { user } = useSession();
 
@@ -83,10 +84,10 @@ function Navbar() {
   </div>
 
   <div className="field">
-    <label htmlFor="year">Year</label>
-    <select id="year" value={year} onChange={(e) => setYear(e.target.value)}>
-      <option value="">Year</option>
-       {yearOptions}
+    <label htmlFor="decade">Decade</label>
+    <select id="decade" value={decade} onChange={(e) => setDecade(e.target.value)}>
+      <option value="">Decade</option>
+      {decadeOptions}
     </select>
   </div>
 
