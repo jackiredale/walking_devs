@@ -2,6 +2,7 @@ import React from 'react';
 // import logo from '../assets/logo.png'; might come back to later
 import { useStateContext } from '../contexts/StateContext';
 import { Link, useNavigate } from 'react-router-dom';
+import FilterDropdown from "./FilterDropdown.jsx";
 
 import { useSession } from '../contexts/SessionContext';
 
@@ -53,6 +54,8 @@ function Navbar() {
               )}
       </nav>
       </div>
+
+     <FilterDropdown />
 
 <div className="SearchBar--wrapper">
   <form onSubmit={handleFormSubmit} className="SearchBar" data-testid="search-bar">

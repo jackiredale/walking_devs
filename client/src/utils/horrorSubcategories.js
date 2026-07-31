@@ -1,0 +1,35 @@
+// Shared by GenreContext and SubcategoryContext — both pick from this same
+// list of horror subcategories, but keep their own independent selection/results state.
+
+export const HORROR_GENRE_ID = 27; // TMDB's genre id for "Horror"
+
+export const HORROR_SUBCATEGORIES = [
+  "Silent Era",
+  "Slasher",
+  "Supernatural",
+  "Occult",
+  "Zombie",
+  "Psychological",
+  "Body Horror",
+  "Folk Horror",
+];
+
+// TMDB doesn't have these as genres, only as keywords, so a subcategory label
+// has to be resolved to a keyword id first, then used to discover movies.
+export function discoverByHorrorSubcategory(label, { apiUrl, apiKey }) {
+  const term = encodeURIComponent(label.toLowerCase());
+
+  return fetch(`${apiUrl}/search/keyword?query=${term}&api_key=${apiKey}`)
+    .then((response) => response.json())
+    .then((keywordData) => {
+      const keywordId = keywordData.results?.[0]?.id;
+
+      if (!keywordId) {
+        return { results: [] }; // no matching TMDB keyword for this label
+      }
+
+      return fetch(
+        `${apiUrl}/discover/movie?with_genres=${HORROR_GENRE_ID}&with_keywords=${keywordId}&api_key=${apiKey}`,
+      ).then((response) => response.json());
+    });
+}
