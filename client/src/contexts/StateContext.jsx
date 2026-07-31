@@ -36,18 +36,6 @@ export const StateContext = ({ children }) => {
       .catch(() => setError("Error fetching genres"));
   }, []);
 
-    // useEffect(() => {
-    //   if (query || !genre) return;
-    //   setData([]);
-    //   fetch(
-    //     `${apiUrl}/discover/movie?with_genres=${genre}&sort_by=${sortBy}&api_key=${apiKey}`,
-    //   )
-    //     .then((response) => response.json())
-    //     .then((responseData) => setData(responseData))
-    //     .catch(() => setError("Error fetching movies by genre"));
-    // }, [genre, sortBy]);
-
-
   //This runs the cat navigation to filter the movies - see FilterDropdown.jsx
   useEffect(() => {
     if (query || !subcategory) return;
@@ -101,15 +89,19 @@ useEffect(() => {
     setQuery(queries);
   };
   // runs the search using whatever's in query right now
+  // modified to filter genre ids down to a specific decade
   const handleSubmit = () => {
     setData([]);
     fetch(`${apiUrl}/search/movie?query=${query}&api_key=${apiKey}`)
       .then((response) => response.json())
       .then((responseData) => {
-      const horrorOnly = (responseData.results || []).filter((movie) =>
-        movie.genre_ids?.includes(27)
-      );
-      setData({ ...responseData, results: horrorOnly });
+        const filtered = (responseData.results || []).filter((movie) => {
+          const isHorror = movie.genre_ids?.includes(27);
+          const releaseYear = movie.release_date ? Number(movie.release_date.slice(0, 4)) : null;
+          const matchesDecade = !decade || (releaseYear && releaseYear >= Number(decade) && releaseYear <= Number(decade) + 9);
+          return isHorror && matchesDecade;
+        });
+        setData({ ...responseData, results: filtered });
       })
       .catch((error) => setError("Error searching for movies:", error));
   };
