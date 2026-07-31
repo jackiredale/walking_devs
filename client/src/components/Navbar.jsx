@@ -3,6 +3,7 @@ import React from 'react';
 import { useStateContext } from '../contexts/StateContext';
 import { Link, useNavigate } from 'react-router-dom';
 import FilterDropdown from "./FilterDropdown.jsx";
+import { HORROR_SUBCATEGORIES } from "../utils/horrorSubcategories";
 
 import { useSession } from '../contexts/SessionContext';
 
@@ -10,16 +11,21 @@ import "./Navbar.css";
 
 function Navbar() {
   
+  //pull in search rules from StateContext.jsx
   const {
     handleFormSubmit, query, handleInputChange,
     year, setYear,
-    genre, setGenre, genreList,
-    rating, setRating,
+    subcategory, setSubcategory,
+    certificate, setCertificate,
     sortBy, setSortBy,
   } = useStateContext();
 
-    //An array method to add make options for the year ddm
-  const years = Array.from({ length: 131 }, (_, i) => new Date().getFullYear() - i);
+  // YEAR SEARCH DROPDOWN - A for loop to add options for the year ddm
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  for (let y = currentYear; y >= currentYear - 131; y--) {
+    years.push(y);
+  }
   const yearOptions = years.map((y) => <option key={y} value={y}>{y}</option>);
 
   const { user } = useSession();
@@ -85,24 +91,25 @@ function Navbar() {
   </div>
 
   <div className="field">
-    <label htmlFor="genre">Genre</label>
-    <select id="genre" value={genre} onChange={(e) => setGenre(e.target.value)}>
-      <option value="">Genre</option>
-      {genreList?.map((g) => (
-        <option key={g.id} value={g.id}>{g.name}</option>
-      ))}
-    </select>
-  </div>
+  <label htmlFor="genre">Genre</label>
+  <select id="genre" value={subcategory} onChange={(e) => setSubcategory(e.target.value)}>
+    <option value="">Genre</option>
+    {HORROR_SUBCATEGORIES.map((label) => (
+      <option key={label} value={label}>{label}</option>
+    ))}
+  </select>
+</div>
 
   <div className="field">
-    <label htmlFor="rating">Rating</label>
-    <select id="rating" value={rating} onChange={(e) => setRating(e.target.value)}>
-      <option value="">Rating</option>
-      <option value="7">7+</option>
-      <option value="8">8+</option>
-      <option value="9">9+</option>
-    </select>
-  </div>
+  <label htmlFor="certificate">Certificate</label>
+  <select id="certificate" value={certificate} onChange={(e) => setCertificate(e.target.value)}>
+    <option value="">Certificate</option>
+    <option value="PG">PG</option>
+    <option value="12A">12A</option>
+    <option value="15">15</option>
+    <option value="18">18</option>
+  </select>
+</div>
 
   <div className="field">
     <label htmlFor="sort">Sort by</label>

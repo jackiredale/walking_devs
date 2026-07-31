@@ -25,6 +25,7 @@ export const StateContext = ({ children }) => {
   const [sortBy, setSortBy] = useState("popularity.desc");
   const [subcategory, setSubcategory] = useState("");//create a subcat for movie cats
   const [year, setYear] = useState("");
+  const [certificate, setCertificate] = useState("");
 
   // fetches TMDB's full genre list once, on page load
 
@@ -39,7 +40,7 @@ export const StateContext = ({ children }) => {
     if (query || !genre) return;
     setData([]);
     fetch(
-      `${apiUrl}/discover/movie?with_genres=27&sort_by=${sortBy}&api_key=${apiKey}`,
+      `${apiUrl}/discover/movie?with_genres=${genre}&sort_by=${sortBy}&api_key=${apiKey}`,
     )
       .then((response) => response.json())
       .then((responseData) => setData(responseData))
@@ -59,12 +60,21 @@ export const StateContext = ({ children }) => {
   useEffect(() => {
   if (query || !year) return;
   setData([]);
-  fetch(`${apiUrl}/discover/movie?with_genres=27&primary_release_year=${year}&api_key=${apiKey}`)
+  fetch(`${apiUrl}/discover/movie?with_genres=27&primary_release_year=${year}&sort_by=${sortBy}&api_key=${apiKey}`)
     .then((response) => response.json())
     .then((responseData) => setData(responseData))
     .catch(() => setError("Error fetching movies by year"));
-}, [year]);
+  }, [year, sortBy]);
 
+  //This gives options to the certificate dropdown in the searchbar
+  useEffect(() => {
+    if (query || !certificate) return;
+    setData([]);
+    fetch(`${apiUrl}/discover/movie?with_genres=27&certification_country=GB&certification=${certificate}&sort_by=${sortBy}&api_key=${apiKey}`)
+      .then((response) => response.json())
+      .then((responseData) => setData(responseData))
+      .catch(() => setError("Error fetching movies by certificate"));
+  }, [certificate, sortBy]);
 
   // default trending list — shown when there's no active search
   const displayMovies = () => {
@@ -84,7 +94,7 @@ export const StateContext = ({ children }) => {
     }
   }, [query]);
 
-  // Search 
+  // Search handles
 
   const handleInputChange = (event) => {
     const queries = event.target.value;
@@ -180,6 +190,8 @@ export const StateContext = ({ children }) => {
         setSubcategory,
         year,
         setYear,
+        certificate,
+        setCertificate,
       }}
     >
       {children}
