@@ -24,7 +24,7 @@ export const StateContext = ({ children }) => {
   const [genreList, setGenreList] = useState([]);
   const [sortBy, setSortBy] = useState("popularity.desc");
   const [subcategory, setSubcategory] = useState("");//create a subcat for movie cats
-  const [year, setYear] = useState("");
+  const [decade, setDecade] = useState("");
   const [certificate, setCertificate] = useState("");
 
   // fetches TMDB's full genre list once, on page load
@@ -36,16 +36,17 @@ export const StateContext = ({ children }) => {
       .catch(() => setError("Error fetching genres"));
   }, []);
 
-  useEffect(() => {
-    if (query || !genre) return;
-    setData([]);
-    fetch(
-      `${apiUrl}/discover/movie?with_genres=${genre}&sort_by=${sortBy}&api_key=${apiKey}`,
-    )
-      .then((response) => response.json())
-      .then((responseData) => setData(responseData))
-      .catch(() => setError("Error fetching movies by genre"));
-  }, [genre, sortBy]);
+    // useEffect(() => {
+    //   if (query || !genre) return;
+    //   setData([]);
+    //   fetch(
+    //     `${apiUrl}/discover/movie?with_genres=${genre}&sort_by=${sortBy}&api_key=${apiKey}`,
+    //   )
+    //     .then((response) => response.json())
+    //     .then((responseData) => setData(responseData))
+    //     .catch(() => setError("Error fetching movies by genre"));
+    // }, [genre, sortBy]);
+
 
   //This runs the cat navigation to filter the movies - see FilterDropdown.jsx
   useEffect(() => {
@@ -56,25 +57,25 @@ export const StateContext = ({ children }) => {
       .catch(() => setError("Error fetching movies by subcategory"));
   }, [subcategory]);
 
-  //This gives options to the year dropdown in the searchbar
-  useEffect(() => {
-  if (query || !year) return;
+//this runs decade and certificate together instead of overwriting each other
+useEffect(() => {
+  if (query || subcategory) return; // let search or the category tabs take priority
+  if (!decade && !certificate) return;
   setData([]);
-  fetch(`${apiUrl}/discover/movie?with_genres=27&primary_release_year=${year}&sort_by=${sortBy}&api_key=${apiKey}`)
+  const params = new URLSearchParams({ api_key: apiKey, sort_by: sortBy, with_genres: "27" });
+  if (decade) {
+    params.set("primary_release_date.gte", `${decade}-01-01`);
+    params.set("primary_release_date.lte", `${Number(decade) + 9}-12-31`);
+  }
+  if (certificate) {
+    params.set("certification_country", "GB");
+    params.set("certification", certificate);
+  }
+  fetch(`${apiUrl}/discover/movie?${params}`)
     .then((response) => response.json())
     .then((responseData) => setData(responseData))
-    .catch(() => setError("Error fetching movies by year"));
-  }, [year, sortBy]);
-
-  //This gives options to the certificate dropdown in the searchbar
-  useEffect(() => {
-    if (query || !certificate) return;
-    setData([]);
-    fetch(`${apiUrl}/discover/movie?with_genres=27&certification_country=GB&certification=${certificate}&sort_by=${sortBy}&api_key=${apiKey}`)
-      .then((response) => response.json())
-      .then((responseData) => setData(responseData))
-      .catch(() => setError("Error fetching movies by certificate"));
-  }, [certificate, sortBy]);
+    .catch(() => setError("Error fetching filtered movies"));
+}, [decade, certificate, sortBy, subcategory, query]);
 
   // default trending list — shown when there's no active search
   const displayMovies = () => {
@@ -192,8 +193,8 @@ export const StateContext = ({ children }) => {
         setSortBy,
         subcategory,
         setSubcategory,
-        year,
-        setYear,
+        decade,
+        setDecade,
         certificate,
         setCertificate,
       }}
