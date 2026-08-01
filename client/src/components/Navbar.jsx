@@ -18,6 +18,7 @@ function Navbar() {
     subcategory, setSubcategory,
     rating, setRating,
     sortBy, setSortBy,
+    resetFilters,
   } = useStateContext();
 
   // YEAR SEARCH DROPDOWN - A for loop to add options for the year ddm
@@ -40,11 +41,12 @@ function Navbar() {
     navigate('/login');
   };
 
+
   return (
     <div className="NavBar" data-testid="navbar">
 
       <div className='Header'>
-      <Link to={"/"} className="LogoLink" data-testid="logo-link">
+      <Link to={"/"} className="LogoLink" data-testid="logo-link" onClick={resetFilters}>
       <h1>Archive of Shadows</h1>
       <p>by the walking devs</p>
         {/* <img src={logo} alt="logo icon" data-testid="logo-img" /> */}

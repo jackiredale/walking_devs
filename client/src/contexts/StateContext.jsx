@@ -120,6 +120,18 @@ export const StateContext = ({ children }) => {
     handleSubmit();
   };
 
+
+  // this resets all filters when the user clicks the logo 
+  // to go back to the home page or the all button in the navbar
+  const resetFilters = () => {
+  setQuery("");
+  setSubcategory("");
+  setDecade("");
+  setRating("");
+  setSortBy("popularity.desc");
+   displayMovies(); // this will reset the data to the default trending list
+  };
+
   // Movie detail / credits
   const [movie, setMovie] = useState(null);
   const [people, setPeople] = useState([]);
@@ -198,6 +210,7 @@ export const StateContext = ({ children }) => {
         setDecade,
         rating,
         setRating,
+        resetFilters,
       }}
     >
       {children}
