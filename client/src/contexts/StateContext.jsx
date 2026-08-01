@@ -10,22 +10,21 @@ const Context = createContext();
 // A few things (error, apiUrl, apiKey, baseImageUrl) are shared across all sections, not owned by just one.
 
 export const StateContext = ({ children }) => {
-  
-  //  Shared across all sections 
+  //  Shared across all sections
   const [error, setError] = useState("");
   const baseImageUrl = "https://image.tmdb.org/t/p/original";
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
   const [query, setQuery] = useState("");
 
-  //  Browse / Trending / Genre filter 
+  //  Browse / Trending / Genre filter
   const [data, setData] = useState([]);
   const [genre, setGenre] = useState("");
   const [genreList, setGenreList] = useState([]);
   const [sortBy, setSortBy] = useState("popularity.desc");
-  const [subcategory, setSubcategory] = useState("");//create a subcat for movie cats
+  const [subcategory, setSubcategory] = useState(""); //create a subcat for movie cats
   const [decade, setDecade] = useState("");
-  const [certificate, setCertificate] = useState("");
+  const [rating, setRating] = useState("");
 
   // fetches TMDB's full genre list once, on page load
 
@@ -40,36 +39,39 @@ export const StateContext = ({ children }) => {
   useEffect(() => {
     if (query || !subcategory) return;
     setData([]);
-    discoverByHorrorSubcategory(subcategory, { apiUrl, apiKey })
+    discoverByHorrorSubcategory(subcategory, {apiUrl, apiKey, rating, decade, sortBy,})
       .then((responseData) => setData(responseData))
       .catch(() => setError("Error fetching movies by subcategory"));
-  }, [subcategory]);
+  }, [subcategory, rating, decade, sortBy]);
 
-//this runs decade and certificate together instead of overwriting each other
-useEffect(() => {
-  if (query || subcategory) return; // let search or the category tabs take priority
-  if (!decade && !certificate) return;
-  setData([]);
-  const params = new URLSearchParams({ api_key: apiKey, sort_by: sortBy, with_genres: "27" });
-  if (decade) {
-    params.set("primary_release_date.gte", `${decade}-01-01`);
-    params.set("primary_release_date.lte", `${Number(decade) + 9}-12-31`);
-  }
-  if (certificate) {
-    params.set("certification_country", "GB");
-    params.set("certification", certificate);
-  }
-  fetch(`${apiUrl}/discover/movie?${params}`)
-    .then((response) => response.json())
-    .then((responseData) => setData(responseData))
-    .catch(() => setError("Error fetching filtered movies"));
-}, [decade, certificate, sortBy, subcategory, query]);
+  //this runs decade and rating together instead of overwriting each other
+  useEffect(() => {
+    if (query || subcategory) return; // let search or the category tabs take priority
+    if (!decade && !rating) return;
+    setData([]);
+    const params = new URLSearchParams({
+      api_key: apiKey,
+      sort_by: sortBy,
+      with_genres: "27",
+    });
+    if (decade) {
+      params.set("primary_release_date.gte", `${decade}-01-01`);
+      params.set("primary_release_date.lte", `${Number(decade) + 9}-12-31`);
+    }
+    if (rating) {
+      params.set("vote_average.gte", rating);
+    }
+    fetch(`${apiUrl}/discover/movie?${params}`)
+      .then((response) => response.json())
+      .then((responseData) => setData(responseData))
+      .catch(() => setError("Error fetching filtered movies"));
+  }, [decade, rating, sortBy, subcategory, query]);
 
   // default trending list — shown when there's no active search
   const displayMovies = () => {
     setData([]);
     fetch(
-      `${apiUrl}/discover/movie?with_genres=27&sort_by=popularity.desc&api_key=${apiKey}`,
+      `${apiUrl}/discover/movie?with_genres=27&sort_by=popularity.desc&api_key=${apiKey}`
     )
       .then((response) => response.json())
       .then((responseData) => setData(responseData))
@@ -91,14 +93,21 @@ useEffect(() => {
   // runs the search using whatever's in query right now
   // modified to filter genre ids down to a specific decade
   const handleSubmit = () => {
+    if (!query) return; // do nothing if the search box is empty
     setData([]);
     fetch(`${apiUrl}/search/movie?query=${query}&api_key=${apiKey}`)
       .then((response) => response.json())
       .then((responseData) => {
         const filtered = (responseData.results || []).filter((movie) => {
           const isHorror = movie.genre_ids?.includes(27);
-          const releaseYear = movie.release_date ? Number(movie.release_date.slice(0, 4)) : null;
-          const matchesDecade = !decade || (releaseYear && releaseYear >= Number(decade) && releaseYear <= Number(decade) + 9);
+          const releaseYear = movie.release_date
+            ? Number(movie.release_date.slice(0, 4))
+            : null;
+          const matchesDecade =
+            !decade ||
+            (releaseYear &&
+              releaseYear >= Number(decade) &&
+              releaseYear <= Number(decade) + 9);
           return isHorror && matchesDecade;
         });
         setData({ ...responseData, results: filtered });
@@ -111,7 +120,7 @@ useEffect(() => {
     handleSubmit();
   };
 
-  // Movie detail / credits 
+  // Movie detail / credits
   const [movie, setMovie] = useState(null);
   const [people, setPeople] = useState([]);
   const [paramId, setParamId] = useState(null);
@@ -161,7 +170,7 @@ useEffect(() => {
       );
   }
 
-  // Exposed to the rest of the app 
+  // Exposed to the rest of the app
   return (
     <Context.Provider
       value={{
@@ -187,8 +196,8 @@ useEffect(() => {
         setSubcategory,
         decade,
         setDecade,
-        certificate,
-        setCertificate,
+        rating,
+        setRating,
       }}
     >
       {children}

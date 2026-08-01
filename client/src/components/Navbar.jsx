@@ -16,7 +16,7 @@ function Navbar() {
     handleFormSubmit, query, handleInputChange,
     decade, setDecade,
     subcategory, setSubcategory,
-    certificate, setCertificate,
+    rating, setRating,
     sortBy, setSortBy,
   } = useStateContext();
 
@@ -102,15 +102,16 @@ function Navbar() {
 </div>
 
   <div className="field">
-  <label htmlFor="certificate">Certificate</label>
-  <select id="certificate" value={certificate} onChange={(e) => setCertificate(e.target.value)}>
-    <option value="">Certificate</option>
-    <option value="PG">PG</option>
-    <option value="12A">12A</option>
-    <option value="15">15</option>
-    <option value="18">18</option>
-  </select>
-</div>
+    <label htmlFor="rating">Rating</label>
+    <select id="rating" value={rating} onChange={(e) => setRating(e.target.value)}>
+      <option value="">Rating</option>
+      <option value="5">5+</option>
+      <option value="6">6+</option>
+      <option value="7">7+</option>
+      <option value="8">8+</option>
+      <option value="9">9+</option>
+    </select>
+  </div>
 
   <div className="field">
     <label htmlFor="sort">Sort by</label>
