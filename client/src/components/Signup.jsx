@@ -16,36 +16,39 @@ const Signup = () => {
   const displayError = (message) => {
     setError(message);
     setTimeout(() => {
-        setError('');
+      setError('');
     }, 3000);
-};
+  };
 
   const validatePassword = () => {
     if (password !== password2) {
-        displayError('Passwords do not match');
-        return false;
+      displayError('Passwords do not match');
+      return false;
     }
     return true;
-    };
-
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // run any validation checks
     if (!validatePassword()) {
-        return;
+      return;
     }
 
     try {
-      const response = await api.post('/api/users', { username: userName, email: email, password: password, password2: password2 });
+      const response = await api.post('/api/auth/register', {
+        username: userName,
+        email: email,
+        password: password,
+      });
       const data = response.data;
-      // Update the user in the context
+
       setUser({
         username: data.user.username,
         id: data.user.id,
       });
 
+      localStorage.setItem('authToken', data.token);
       navigate('/');
     } catch (error) {
       console.error('Signup failed', error);

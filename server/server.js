@@ -4,9 +4,11 @@ const bcrypt = require("bcryptjs");
 const { DataTypes } = require("sequelize");
 const dotenv = require("dotenv");
 const sequelize = require("./config/connection");
+const cors = require("cors");
 
 dotenv.config();
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 3001;
 const SECRET_KEY = process.env.JWT_SECRET || "supersecretkey";
 
@@ -93,6 +95,105 @@ app.post("/api/auth/login", async (req, res) => {
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Error logging in", error: error.message });
+  }
+});
+
+// Change password (requires current password to verify identity)
+app.put("/api/auth/change-password", authenticateJWT, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: "Current and new password are required" });
+    }
+
+    const user = await User.findByPk(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Current password is incorrect" });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedNewPassword;
+    await user.save();
+
+    res.json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Change password error:", error);
+    res.status(500).json({ message: "Error changing password", error: error.message });
+  }
+});
+
+// Change email
+app.put("/api/auth/change-email", authenticateJWT, async (req, res) => {
+  try {
+    const { newEmail, currentPassword } = req.body;
+
+    if (!newEmail || !currentPassword) {
+      return res.status(400).json({ message: "New email and current password are required" });
+    }
+
+    const user = await User.findByPk(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Current password is incorrect" });
+    }
+
+    const existing = await User.findOne({ where: { email: newEmail } });
+    if (existing) {
+      return res.status(409).json({ message: "That email is already in use" });
+    }
+
+    user.email = newEmail;
+    await user.save();
+
+    res.json({ message: "Email updated successfully", email: user.email });
+  } catch (error) {
+    console.error("Change email error:", error);
+    res.status(500).json({ message: "Error changing email", error: error.message });
+  }
+});
+
+// Delete account
+app.delete("/api/auth/delete-account", authenticateJWT, async (req, res) => {
+  try {
+    const { currentPassword } = req.body;
+
+    if (!currentPassword) {
+      return res.status(400).json({ message: "Current password is required" });
+    }
+
+    const user = await User.findByPk(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Current password is incorrect" });
+    }
+
+    // Remove their watchlist entries first, to avoid orphaned data
+    await Watchlist.destroy({ where: { userId: user.id } });
+
+    // Then remove the user themselves
+    await user.destroy();
+
+    res.json({ message: "Account deleted successfully" });
+  } catch (error) {
+    console.error("Delete account error:", error);
+    res.status(500).json({ message: "Error deleting account", error: error.message });
   }
 });
 
