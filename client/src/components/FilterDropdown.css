@@ -1,0 +1,46 @@
+.FilterDropdown {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 1366px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+}
+
+.FilterDropdown-label {
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.9rem;
+  white-space: nowrap;
+}
+
+.FilterDropdown-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.FilterDropdown-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.3rem 0;
+}
+
+.FilterDropdown-tab:hover {
+  color: var(--text);
+}
+
+.FilterDropdown-tab.is-active {
+  font-weight: bold;
+}

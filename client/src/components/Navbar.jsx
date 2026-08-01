@@ -2,6 +2,8 @@ import React from 'react';
 // import logo from '../assets/logo.png'; might come back to later
 import { useStateContext } from '../contexts/StateContext';
 import { Link, useNavigate } from 'react-router-dom';
+import FilterDropdown from "./FilterDropdown.jsx";
+import { HORROR_SUBCATEGORIES } from "../utils/horrorSubcategories";
 
 import { useSession } from '../contexts/SessionContext';
 
@@ -9,13 +11,24 @@ import "./Navbar.css";
 
 function Navbar() {
   
+  //pull in search rules from StateContext.jsx
   const {
     handleFormSubmit, query, handleInputChange,
-    year, setYear,
-    genre, setGenre, genreList,
+    decade, setDecade,
+    subcategory, setSubcategory,
     rating, setRating,
     sortBy, setSortBy,
+    resetFilters,
   } = useStateContext();
+
+  // YEAR SEARCH DROPDOWN - A for loop to add options for the year ddm
+  const currentYear = new Date().getFullYear();
+  const currentDecade = Math.floor(currentYear / 10) * 10;
+  const decades = [];
+  for (let d = currentDecade; d >= 1890; d -= 10) {
+    decades.push(d);
+  }
+  const decadeOptions = decades.map((d) => <option key={d} value={d}>{d}s</option>);
 
   const { user, setUser } = useSession();
 
@@ -28,11 +41,12 @@ function Navbar() {
   navigate('/login');
   };
 
+
   return (
     <div className="NavBar" data-testid="navbar">
 
       <div className='Header'>
-      <Link to={"/"} className="LogoLink" data-testid="logo-link">
+      <Link to={"/"} className="LogoLink" data-testid="logo-link" onClick={resetFilters}>
       <h1>Archive of Shadows</h1>
       <p>by the walking devs</p>
         {/* <img src={logo} alt="logo icon" data-testid="logo-img" /> */}
@@ -54,6 +68,8 @@ function Navbar() {
       </nav>
       </div>
 
+     <FilterDropdown />
+
 <div className="SearchBar--wrapper">
   <form onSubmit={handleFormSubmit} className="SearchBar" data-testid="search-bar">
   <div className="field field-term">
@@ -70,26 +86,29 @@ function Navbar() {
   </div>
 
   <div className="field">
-    <label htmlFor="year">Year</label>
-    <select id="year" value={year} onChange={(e) => setYear(e.target.value)}>
-      <option value="">Year</option>
+    <label htmlFor="decade">Decade</label>
+    <select id="decade" value={decade} onChange={(e) => setDecade(e.target.value)}>
+      <option value="">Decade</option>
+      {decadeOptions}
     </select>
   </div>
 
   <div className="field">
-    <label htmlFor="genre">Genre</label>
-    <select id="genre" value={genre} onChange={(e) => setGenre(e.target.value)}>
-      <option value="">Genre</option>
-      {genreList?.map((g) => (
-        <option key={g.id} value={g.id}>{g.name}</option>
-      ))}
-    </select>
-  </div>
+  <label htmlFor="genre">Genre</label>
+  <select id="genre" value={subcategory} onChange={(e) => setSubcategory(e.target.value)}>
+    <option value="">Genre</option>
+    {HORROR_SUBCATEGORIES.map((label) => (
+      <option key={label} value={label}>{label}</option>
+    ))}
+  </select>
+</div>
 
   <div className="field">
     <label htmlFor="rating">Rating</label>
     <select id="rating" value={rating} onChange={(e) => setRating(e.target.value)}>
       <option value="">Rating</option>
+      <option value="5">5+</option>
+      <option value="6">6+</option>
       <option value="7">7+</option>
       <option value="8">8+</option>
       <option value="9">9+</option>
