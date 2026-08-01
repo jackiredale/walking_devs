@@ -1,109 +1,182 @@
-import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import loader from '../assets/loader.gif';
 
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ results: [] });
   const [query, setQuery] = useState('');
   const [movie, setMovie] = useState(null);
   const [people, setPeople] = useState([]);
-  const [error, setError] = useState("")
-  const [paramId, setParamId] = useState(null)
+  const [error, setError] = useState('');
+  const [paramId, setParamId] = useState(null);
 
-  const baseImageUrl = 'https://image.tmdb.org/t/p/original';
+  const baseImageUrl = '';
 
-  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL
-  const apiKey = import.meta.env.VITE_REACT_APP_API_KEY
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+  const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
+
+  const formatMovie = (movie) => ({
+    ...movie,
+    id: movie.tmdbId,
+    databaseId: movie.id,
+    overview: movie.description,
+    poster_path: movie.posterUrl,
+    release_date: `${movie.releaseYear}-01-01`,
+    vote_average: movie.averageRating,
+  });
 
   const handleInputChange = (event) => {
-    const queries = event.target.value;
-    setQuery(queries);
+    setQuery(event.target.value);
   };
 
   const displayMovies = async () => {
-    setData([]);
+    setData({ results: [] });
+    setError('');
+
     try {
-      const response = await fetch(`${apiUrl}/discover/movie?with_genres=27&sort_by=popularity.desc&api_key=${apiKey}`);
+      const response = await fetch('http://localhost:3001/api/movies');
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch movies');
+      }
+
       const responseData = await response.json();
-      setData(responseData);
+      const formattedMovies = responseData.movies.map(formatMovie);
+
+      setData({
+        results: formattedMovies,
+      });
     } catch (error) {
-      setError("")
-     setError('Error fetching trending movies:', error);
+      console.error('Error fetching movies:', error);
+      setError('Error fetching movies');
     }
   };
 
   useEffect(() => {
-    if (!query) {
+    if (!query.trim()) {
       displayMovies();
-    } 
+    }
   }, [query]);
 
-
   const handleSubmit = async () => {
-    setData([]);
+    setData({ results: [] });
+    setError('');
+
     try {
-      const response = await fetch(`${apiUrl}/search/movie?query=${query}&api_key=${apiKey}`);
+      const response = await fetch('http://localhost:3001/api/movies');
+
+      if (!response.ok) {
+        throw new Error('Failed to search movies');
+      }
+
       const responseData = await response.json();
-      setData(responseData);
+      const searchTerm = query.trim().toLowerCase();
+
+      const filteredMovies = responseData.movies
+        .filter((movie) =>
+          movie.title.toLowerCase().includes(searchTerm)
+        )
+        .map(formatMovie);
+
+      setData({
+        results: filteredMovies,
+      });
     } catch (error) {
-      setError("")
-      setError('Error searching for movies:', error);
+      console.error('Error searching for movies:', error);
+      setError('Error searching for movies');
     }
   };
 
   const handleFormSubmit = (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-    handleSubmit(); 
+    event.preventDefault();
+    handleSubmit();
   };
 
   const handleClick = async (movieId) => {
     try {
-      const response = await fetch(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`);
+      setError('');
+
+      const response = await fetch(
+        `${apiUrl}/movie/${movieId}?api_key=${apiKey}`
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch movie details');
+      }
+
       const responseData = await response.json();
       setMovie(responseData);
     } catch (error) {
-      setError("")
-      setError('Error fetching movie details:', error);
+      console.error('Error fetching movie details:', error);
+      setError('Error fetching movie details');
       setMovie(null);
     }
   };
 
   const getPeople = async (movieId) => {
     try {
-      const response = await fetch(`${apiUrl}/movie/${movieId}/credits?api_key=${apiKey}`);
+      setError('');
+
+      const response = await fetch(
+        `${apiUrl}/movie/${movieId}/credits?api_key=${apiKey}`
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch movie credits');
+      }
+
       const responseData = await response.json();
-      setPeople(responseData); 
+      setPeople(responseData);
     } catch (error) {
-      setError("")
-      setError('Error fetching movie credits:', error);
+      console.error('Error fetching movie credits:', error);
+      setError('Error fetching movie credits');
+      setPeople([]);
     }
   };
 
-  
   function callTwoFunctions(movieId) {
+    setParamId(movieId);
     handleClick(movieId);
     getPeople(movieId);
-  };
-
+  }
 
   function DisplayError() {
-    callTwoFunctions(paramId)
-    if(error) {
+    if (error) {
       return (
-        <div className="mt-[50px] m-auto" data-testid="loader-image">
-          <h1  className="text-xl text-red-800 font-extrabold">{error}</h1>
+        <div
+          className="mt-[50px] m-auto"
+          data-testid="loader-image"
+        >
+          <h1 className="text-xl text-red-800 font-extrabold">
+            {error}
+          </h1>
         </div>
       );
-    } else
+    }
+
     return (
-      <div className="mt-[50px] w-18 m-auto" data-testid="loader-image">
-        <img className="w-full h-full object-cover" src={loader} alt="loader gif" />
-        <h1  className="text-xl text-black font-extrabold">Make Sure You Are Connected to the Internet</h1>
+      <div
+        className="mt-[50px] w-18 m-auto"
+        data-testid="loader-image"
+      >
+        <img
+          className="w-full h-full object-cover"
+          src={loader}
+          alt="Loading"
+        />
+
+        <h1 className="text-xl text-black font-extrabold">
+          Loading movies...
+        </h1>
       </div>
     );
-    
   }
 
   return (
@@ -121,7 +194,8 @@ export const StateContext = ({ children }) => {
         people,
         callTwoFunctions,
         handleFormSubmit,
-        setParamId
+        setParamId,
+        paramId,
       }}
     >
       {children}
@@ -129,4 +203,4 @@ export const StateContext = ({ children }) => {
   );
 };
 
-export const useStateContext = () => useContext(Context); 
+export const useStateContext = () => useContext(Context);

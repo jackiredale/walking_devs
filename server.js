@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const movies = require("./movies.json");
+const movies = require("./database/movies.json");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
