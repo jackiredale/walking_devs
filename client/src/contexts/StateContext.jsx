@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { discoverByHorrorSubcategory } from "../utils/horrorSubcategories";
 import loader from "../assets/loader.gif";
+import seededMoviesData from "../mock/seededMovies.json";
 
 const Context = createContext();
 
@@ -25,6 +26,7 @@ export const StateContext = ({ children }) => {
   const [subcategory, setSubcategory] = useState(""); //create a subcat for movie cats
   const [decade, setDecade] = useState("");
   const [rating, setRating] = useState("");
+  const [seededMovies, setSeededMovies] = useState([]);
 
   // fetches TMDB's full genre list once, on page load
 
@@ -39,7 +41,9 @@ export const StateContext = ({ children }) => {
   useEffect(() => {
     if (query || !subcategory) return;
     setData([]);
-    discoverByHorrorSubcategory(subcategory, {apiUrl, apiKey, rating, decade, sortBy,})
+    discoverByHorrorSubcategory(subcategory, {
+      apiUrl, apiKey, rating, decade, sortBy,
+    })
       .then((responseData) => setData(responseData))
       .catch(() => setError("Error fetching movies by subcategory"));
   }, [subcategory, rating, decade, sortBy]);
@@ -77,6 +81,44 @@ export const StateContext = ({ children }) => {
       .then((responseData) => setData(responseData))
       .catch(() => setError("Error fetching trending movies:"));
   };
+  //  mock seeded movies for testing without hitting the API
+  const mockSeededMovies = (params) => {
+    const search = params.get("search");
+    const subgenre = params.get("subgenre");
+    const decade = params.get("decade");
+    const minRating = params.get("minRating");
+
+    const filtered = seededMoviesData.filter((movie) => {
+      const matchesSearch =
+        !search || movie.title.toLowerCase().includes(search.toLowerCase());
+      const matchesSubgenre =
+        !subgenre ||
+        movie.categories.some(
+          (c) => c.toLowerCase() === subgenre.toLowerCase()
+        );
+      const matchesDecade =
+        !decade ||
+        (movie.releaseYear >= Number(decade) &&
+          movie.releaseYear <= Number(decade) + 9);
+      const matchesRating =
+        !minRating || movie.averageRating >= Number(minRating);
+      return matchesSearch && matchesSubgenre && matchesDecade && matchesRating;
+    });
+
+    return Promise.resolve({ movies: filtered });
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (query) params.set("search", query);
+    if (subcategory) params.set("subgenre", subcategory);
+    if (decade) params.set("decade", decade);
+    if (rating) params.set("minRating", rating);
+
+    mockSeededMovies(params)
+      .then((responseData) => setSeededMovies(responseData.movies))
+      .catch(() => setError("Error fetching seeded movies"));
+  }, [query, subcategory, decade, rating, sortBy]);
 
   // shows the trending list on page load, and again whenever the search box is cleared
   useEffect(() => {
@@ -120,16 +162,15 @@ export const StateContext = ({ children }) => {
     handleSubmit();
   };
 
-
-  // this resets all filters when the user clicks the logo 
+  // this resets all filters when the user clicks the logo
   // to go back to the home page or the all button in the navbar
   const resetFilters = () => {
-  setQuery("");
-  setSubcategory("");
-  setDecade("");
-  setRating("");
-  setSortBy("popularity.desc");
-   displayMovies(); // this will reset the data to the default trending list
+    setQuery("");
+    setSubcategory("");
+    setDecade("");
+    setRating("");
+    setSortBy("popularity.desc");
+    displayMovies(); // this will reset the data to the default trending list
   };
 
   // Movie detail / credits
@@ -211,6 +252,8 @@ export const StateContext = ({ children }) => {
         rating,
         setRating,
         resetFilters,
+        seededMovies,
+        setSeededMovies,
       }}
     >
       {children}
