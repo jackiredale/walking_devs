@@ -16,6 +16,13 @@ export const StateContext = ({ children }) => {
   const baseImageUrl = "https://image.tmdb.org/t/p/original";
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
+  // this is a helper function to fetch JSON data and handle errors
+  const fetchJson = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+  return response.json();
+  };
+
   const [query, setQuery] = useState("");
 
   //  Browse / Trending / Genre filter
@@ -26,22 +33,6 @@ export const StateContext = ({ children }) => {
   const [rating, setRating] = useState("");
   const [seededMovies, setSeededMovies] = useState([]);
 
-  // fetches TMDB's full genre list once, on page load
-
-  useEffect(() => {
-    const fetchGenres = async () => {
-      try {
-        const response = await fetch(
-          `${apiUrl}/genre/movie/list?api_key=${apiKey}`
-        );
-        const responseData = await response.json();
-      } catch {
-        setError("Error fetching genres");
-      }
-    };
-    fetchGenres();
-  }, []);
-
   //This runs the cat navigation to filter the movies - see FilterDropdown.jsx
   useEffect(() => {
     if (query || !subcategory) return;
@@ -49,11 +40,7 @@ export const StateContext = ({ children }) => {
       setData([]);
       try {
         const responseData = await discoverByHorrorSubcategory(subcategory, {
-          apiUrl,
-          apiKey,
-          rating,
-          decade,
-          sortBy,
+          apiUrl, apiKey, rating, decade, sortBy,
         });
         setData(responseData);
       } catch {
@@ -83,8 +70,7 @@ export const StateContext = ({ children }) => {
         params.set("vote_average.gte", rating);
       }
       try {
-        const response = await fetch(`${apiUrl}/discover/movie?${params}`);
-        const responseData = await response.json();
+        const responseData = await fetchJson(`${apiUrl}/discover/movie?${params}`);
         setData(responseData);
       } catch {
         setError("Error fetching filtered movies");
@@ -96,16 +82,15 @@ export const StateContext = ({ children }) => {
 
   // default trending list — shown when there's no active search
   const displayMovies = async () => {
-    setData([]);
-    try {
-      const response = await fetch(
-        `${apiUrl}/discover/movie?with_genres=27&sort_by=popularity.desc&api_key=${apiKey}`
-      );
-      const responseData = await response.json();
-      setData(responseData);
-    } catch {
-      setError("Error fetching trending movies:");
-    }
+  setData([]);
+  try {
+    const responseData = await fetchJson(
+      `${apiUrl}/discover/movie?with_genres=27&sort_by=popularity.desc&api_key=${apiKey}`
+    );
+    setData(responseData);
+  } catch {
+    setError("Error fetching trending movies:");
+  }
   };
 
   //  mock seeded movies for testing without hitting the API
@@ -171,10 +156,9 @@ export const StateContext = ({ children }) => {
     if (!query) return; // do nothing if the search box is empty
     setData([]);
     try {
-      const response = await fetch(
+      const responseData = await fetchJson(
         `${apiUrl}/search/movie?query=${query}&api_key=${apiKey}`
       );
-      const responseData = await response.json();
       const filtered = (responseData.results || []).filter((movie) => {
         const isHorror = movie.genre_ids?.includes(27);
         const releaseYear = movie.release_date
@@ -215,10 +199,9 @@ export const StateContext = ({ children }) => {
 
   const handleClick = async (movieId) => {
     try {
-      const response = await fetch(
+      const responseData = await fetchJson(
         `${apiUrl}/movie/${movieId}?api_key=${apiKey}`
       );
-      const responseData = await response.json();
       setMovie(responseData);
     } catch {
       setError("Error fetching movie details:");
@@ -228,10 +211,9 @@ export const StateContext = ({ children }) => {
 
   const getPeople = async (movieId) => {
     try {
-      const response = await fetch(
+      const responseData = await fetchJson(
         `${apiUrl}/movie/${movieId}/credits?api_key=${apiKey}`
       );
-      const responseData = await response.json();
       setPeople(responseData);
     } catch {
       setError("Error fetching movie credits:");
