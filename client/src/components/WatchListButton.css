@@ -1,0 +1,35 @@
+.btn-watchlist {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--bg-raised);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.btn-watchlist:hover {
+  background: #202023;
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.btn-watchlist.active,
+.btn-watchlist--solid {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-watchlist.active:hover,
+.btn-watchlist--solid:hover {
+  background: #a30f22;
+}
+
+.btn-watchlist--remove {
+  background: transparent;
+}
