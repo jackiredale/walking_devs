@@ -122,6 +122,28 @@ export const StateContext = ({ children }) => {
     return Promise.resolve({ movies: filtered });
   };
 
+  //  mock seeded movie detail for testing without hitting the API
+  const getMovieById = (id) => {
+  const found = seededMoviesData.find((movie) => String(movie.tmdbId) === String(id));
+    if (!found) {
+      return Promise.reject(new Error("Movie not found"));
+    }
+
+  return Promise.resolve({
+    id: found.tmdbId,
+    title: found.title,
+    overview: found.description,
+    poster_path: found.posterUrl,
+    release_date: `${found.releaseYear}-01-01`,
+    runtime: found.runtime,
+    vote_average: found.averageRating,
+    genres: found.categories.map((name) => ({ name })),
+    credits: { crew: [{ job: "Director", name: found.director }], cast: [] },
+  });
+};
+
+  // this runs the mock seeded movies function whenever the search box or filters change
+
   useEffect(() => {
     const fetchSeeded = async () => {
       const params = new URLSearchParams();
@@ -255,6 +277,7 @@ export const StateContext = ({ children }) => {
         resetFilters,
         seededMovies,
         setSeededMovies,
+        getMovieById,
         currentPage, 
         setCurrentPage,
         error,
