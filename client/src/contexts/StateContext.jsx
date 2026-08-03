@@ -13,6 +13,7 @@ const Context = createContext();
 export const StateContext = ({ children }) => {
   //  Shared across all sections
   const [error, setError] = useState("");
+  // const [error, setError] = useState("Test error message");
   const baseImageUrl = "https://image.tmdb.org/t/p/original";
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
@@ -256,6 +257,7 @@ export const StateContext = ({ children }) => {
         setSeededMovies,
         currentPage, 
         setCurrentPage,
+        error,
       }}
     >
       {children}
