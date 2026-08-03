@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthPage from "./pages/AuthPage.jsx";
 import Watchlist from "./pages/Watchlist.jsx";
+import MovieDetail from "./pages/MovieDetail.jsx";
 import Profile from "./pages/Profile.jsx";
 import Navbar from './components/Navbar';
 import MovieList from './components/MovieList';
@@ -19,6 +20,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<AuthPage />} />
         <Route path="/watchlist" element={<Watchlist />} />
+        <Route path="/movie/:id" element={<MovieDetail />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/" element={<MovieList />} />
         <Route path="/course/:id" element={<CourseDetails />} />
