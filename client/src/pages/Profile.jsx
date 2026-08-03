@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../api";
 import { useSession } from "../contexts/SessionContext";
 import { useNavigate } from "react-router-dom";
+import "./Profile.css";
 
 export default function Profile() {
   const { user, setUser } = useSession();
