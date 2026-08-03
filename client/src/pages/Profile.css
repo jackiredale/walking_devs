@@ -1,0 +1,117 @@
+.profile-page{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+
+}
+.profile-page h2{
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 2rem;
+    letter-spacing: 0.1rem;
+}
+.profile-page h3{
+    width: 100%;
+    margin: 1rem;
+}
+
+.profile-page {
+    text-align: center;
+}
+.profile-page form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background: var(--bg-panel);
+    padding: 2rem;
+    margin: 1rem;
+}
+.profile-page form input{
+    width: 80vw;
+}
+.profile-page .field label{
+    width: 100%;
+    margin-top: 1rem;
+}
+.profile-page button{
+    background: var(--accent);
+    color: var(--text);
+    border: none;
+    padding: .72rem 1.4rem;
+    font-size: .8rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+
+    margin-top: 2rem;
+    width: 80vw;;
+}
+.profile-page .error-message{
+    color: red;
+    font-size: 14px;
+}
+.profile-page .success-message{
+    color: green;
+    font-size: 14px;
+}
+
+.profile-page button:hover{
+    background-color: var(--accent-dim);
+}
+
+
+@media screen and (min-width: 768px) {
+
+/* Rearange content for larger screens */
+
+.profile-page {
+    align-items: stretch;
+}
+.profile-page form{
+    width: 40%;
+    height: auto;
+}
+.profile-page form input{
+    width: 40vw;
+    max-width: 300px;
+}
+.profile-page button{
+    width: 40vw;
+    max-width: 300px;
+}
+.profile-page h3:nth-child(1){
+    order: 1;
+}
+
+/* H2 */
+.profile-page h3:nth-child(2){
+    order: 2;
+    width: 40%;
+}
+.profile-page h3:nth-child(4){
+    order: 3;
+    width: 40%;
+}
+/* FORMS */
+.profile-page form:nth-child(3){
+    order: 4;
+}
+.profile-page form:nth-child(5){
+    order: 5;
+}
+
+/* Delete Account */
+.profile-page h3:nth-child(6){
+    order: 6;
+    margin-top: 2rem;
+}
+.profile-page button:nth-child(7){
+    order: 7;
+    margin:0;
+}
+} 
+

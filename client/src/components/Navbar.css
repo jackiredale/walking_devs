@@ -97,6 +97,7 @@ color: var(--text-dim);
   font-size: .82rem;
   border-radius: 2px;
   appearance: none;
+  outline: none;
 }
 
 .field select {
