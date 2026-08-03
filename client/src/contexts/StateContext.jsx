@@ -26,11 +26,12 @@ export const StateContext = ({ children }) => {
   const [query, setQuery] = useState("");
 
   //  Browse / Trending / Genre filter
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ results: [] });
   const [sortBy, setSortBy] = useState("popularity.desc");
   const [subcategory, setSubcategory] = useState(""); //create a subcat for movie cats
   const [decade, setDecade] = useState("");
   const [rating, setRating] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // this is for pagination under the posters
   const [seededMovies, setSeededMovies] = useState([]);
 
   //This runs the cat navigation to filter the movies - see FilterDropdown.jsx
@@ -131,6 +132,7 @@ export const StateContext = ({ children }) => {
       try {
         const responseData = await mockSeededMovies(params);
         setSeededMovies(responseData.movies);
+        setCurrentPage(1); // reset to first page whenever filters change
       } catch {
         setError("Error fetching seeded movies");
       }
@@ -190,6 +192,7 @@ export const StateContext = ({ children }) => {
     setDecade("");
     setRating("");
     setSortBy("popularity.desc");
+    setCurrentPage(1); // reset to first page
     displayMovies(); // this will reset the data to the default trending list
   };
 
@@ -251,6 +254,8 @@ export const StateContext = ({ children }) => {
         resetFilters,
         seededMovies,
         setSeededMovies,
+        currentPage, 
+        setCurrentPage,
       }}
     >
       {children}

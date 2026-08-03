@@ -3,7 +3,7 @@ import { useStateContext } from '../contexts/StateContext';
 import './MovieList.css'
 
 function MovieList() {
-  const { data, baseImageUrl, seededMovies } = useStateContext();
+  const { data, baseImageUrl, seededMovies, currentPage, setCurrentPage } = useStateContext();
 
   const formattedSeededMovies = seededMovies.map((movie) => ({
     id: movie.tmdbId,
@@ -12,8 +12,12 @@ function MovieList() {
     release_date: String(movie.releaseYear),
   }));
 
-  const movies = formattedSeededMovies.slice(0,12);
-
+  const moviesPerPage = 12; // Number of movies to display per page
+  const startIndex = (currentPage - 1) * moviesPerPage;
+  const endIndex = startIndex + moviesPerPage;
+  const movies = formattedSeededMovies.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(formattedSeededMovies.length / moviesPerPage);
+  
   return (
       <div className="movie-grid">
       {movies.map((movie) => (
