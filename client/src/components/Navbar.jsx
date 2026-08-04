@@ -74,9 +74,6 @@ function Navbar() {
      {isHomepage && <FilterDropdown />}
 
     {isHomepage && (
-      <div className="SearchBar--wrapper">
-       
-
 
 <div className="SearchBar--wrapper">
   <form onSubmit={handleFormSubmit} className="SearchBar" data-testid="search-bar">
@@ -136,7 +133,6 @@ function Navbar() {
 </form>
       </div>
 
-      </div>
     )}
     </div>
   );
