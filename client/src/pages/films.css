@@ -1,0 +1,130 @@
+.films-page {
+  background: #0a0a0a;
+  min-height: 100vh;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+}
+
+.films-filters {
+  background: #141414;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #262626;
+}
+
+.films-search {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.films-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.films-field label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #999;
+}
+
+.films-field input,
+.films-field select {
+  background: #1f1f1f;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  min-width: 160px;
+  font-size: 0.9rem;
+}
+
+.films-field input {
+  min-width: 240px;
+}
+
+.films-search-btn {
+  background: #8c1010;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.films-search-btn:hover {
+  background: #a51414;
+}
+
+.films-pills {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.films-pill {
+  background: none;
+  border: 1px solid #333;
+  color: #999;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.films-pill.active {
+  background: #8c1010;
+  border-color: #8c1010;
+  color: #fff;
+}
+
+.films-results {
+  padding: 2rem;
+}
+
+.films-status {
+  color: #999;
+  font-size: 1.1rem;
+}
+
+.films-status--error {
+  color: #d94848;
+}
+
+.films-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.films-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.films-card-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: #1f1f1f;
+}
+
+.films-card-poster--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.films-card-title {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
