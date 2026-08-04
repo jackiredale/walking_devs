@@ -5,6 +5,7 @@ const { DataTypes } = require("sequelize");
 const dotenv = require("dotenv");
 const sequelize = require("./config/connection");
 const cors = require("cors");
+const movieRoutes = require("./routes/movies");
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,7 @@ const Watchlist = sequelize.define("Watchlist", {
 });
 
 app.use(express.json());
+app.use("/api/movies", movieRoutes);
 
 // Middleware for authenticating JWT tokens
 const authenticateJWT = (req, res, next) => {
