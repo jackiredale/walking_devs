@@ -64,7 +64,15 @@ export const StateContext = ({ children }) => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3001/api/movies');
+      const params = new URLSearchParams();
+
+if (subcategory) {
+  params.append("subgenre", subcategory);
+}
+
+const response = await fetch(
+  `http://localhost:3001/api/movies?${params.toString()}`
+);
 
       if (!response.ok) {
         throw new Error('Failed to fetch movies');
@@ -86,7 +94,7 @@ export const StateContext = ({ children }) => {
     if (!query.trim()) {
       displayMovies();
     }
-  }, [query]);
+  }, [query, subcategory]);
 
   const handleSubmit = async () => {
     setData({ results: [] });
@@ -129,7 +137,6 @@ export const StateContext = ({ children }) => {
     setDecade("");
     setRating("");
     setSortBy("popularity.desc");
-    displayMovies();
   };
 
   const handleClick = async (movieId) => {
