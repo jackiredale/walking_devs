@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { discoverByHorrorSubcategory } from "../utils/horrorSubcategories";
 import loader from "../assets/loader.gif";
 import seededMoviesData from "../mock/seededMovies.json";
+import { apiFetch } from "../utils/api";
 
 const Context = createContext();
 
@@ -95,52 +96,69 @@ export const StateContext = ({ children }) => {
   }
   };
 
-  //  mock seeded movies for testing without hitting the API
-  const mockSeededMovies = (params) => {
-    const search = params.get("search");
-    const subgenre = params.get("subgenre");
-    const decade = params.get("decade");
-    const minRating = params.get("minRating");
+// TODO: Once Tamara's backend is ready, replace the mockSeededMovies function 
+// below with a real API call to fetch seeded movies from the backend. 
+// For now, it uses the seededMoviesData JSON file for testing purposes.
 
-    const filtered = seededMoviesData.filter((movie) => {
-      const matchesSearch =
-        !search || movie.title.toLowerCase().includes(search.toLowerCase());
-      const matchesSubgenre =
-        !subgenre ||
-        movie.categories.some(
-          (c) => c.toLowerCase() === subgenre.toLowerCase()
-        );
-      const matchesDecade =
-        !decade ||
-        (movie.releaseYear >= Number(decade) &&
-          movie.releaseYear <= Number(decade) + 9);
-      const matchesRating =
-        !minRating || movie.averageRating >= Number(minRating);
-      return matchesSearch && matchesSubgenre && matchesDecade && matchesRating;
-    });
-
-    return Promise.resolve({ movies: filtered });
-  };
-
-  //  mock seeded movie detail for testing without hitting the API
-  const getMovieById = (id) => {
-  const found = seededMoviesData.find((movie) => String(movie.tmdbId) === String(id));
-    if (!found) {
-      return Promise.reject(new Error("Movie not found"));
-    }
-
-  return Promise.resolve({
-    id: found.tmdbId,
-    title: found.title,
-    overview: found.description,
-    poster_path: found.posterUrl,
-    release_date: `${found.releaseYear}-01-01`,
-    runtime: found.runtime,
-    vote_average: found.averageRating,
-    genres: found.categories.map((name) => ({ name })),
-    credits: { crew: [{ job: "Director", name: found.director }], cast: [] },
-  });
+const mockSeededMovies = async (params) => {
+  const movies = await apiFetch(`/movies?${params}`);
+  return { movies };
 };
+
+  //  mock seeded movies for testing without hitting the API
+    // const mockSeededMovies = (params) => {
+    // const search = params.get("search");
+    // const subgenre = params.get("subgenre");
+    // const decade = params.get("decade");
+    // const minRating = params.get("minRating");
+
+  //   const filtered = seededMoviesData.filter((movie) => {
+  //     const matchesSearch =
+  //       !search || movie.title.toLowerCase().includes(search.toLowerCase());
+  //     const matchesSubgenre =
+  //       !subgenre ||
+  //       movie.categories.some(
+  //         (c) => c.toLowerCase() === subgenre.toLowerCase()
+  //       );
+  //     const matchesDecade =
+  //       !decade ||
+  //       (movie.releaseYear >= Number(decade) &&
+  //         movie.releaseYear <= Number(decade) + 9);
+  //     const matchesRating =
+  //       !minRating || movie.averageRating >= Number(minRating);
+  //     return matchesSearch && matchesSubgenre && matchesDecade && matchesRating;
+  //   });
+
+  //   return Promise.resolve({ movies: filtered });
+  // };
+
+// TODO: once Tamara's backend is ready, replace the line below with:
+const getMovieById = async (id) => {
+  const found = await apiFetch(`/movies/${id}`);
+  if (!found) return Promise.reject(new Error("Movie not found"));
+  return found;
+};
+
+//  mock seeded movie detail for testing without hitting the API
+// const getMovieById = (id) => {
+//   const found = seededMoviesData.find((movie) => String(movie.tmdbId) === String(id));
+//   if (!found) {
+//     return Promise.reject(new Error("Movie not found"));
+//   }
+
+//   return Promise.resolve({
+//     id: found.tmdbId,
+//     title: found.title,
+//     overview: found.description,
+//     poster_path: found.posterUrl,
+//     release_date: `${found.releaseYear}-01-01`,
+//     runtime: found.runtime,
+//     vote_average: found.averageRating,
+//     genres: found.categories.map((name) => ({ name })),
+//     credits: { crew: [{ job: "Director", name: found.director }], cast: [] },
+//   });
+// };
+
 
   // this runs the mock seeded movies function whenever the search box or filters change
 
