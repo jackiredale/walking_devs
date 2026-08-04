@@ -102,7 +102,7 @@ export const StateContext = ({ children }) => {
 
 const mockSeededMovies = async (params) => {
   const movies = await apiFetch(`/movies?${params}`);
-  return { movies };
+ return movies;
 };
 
   //  mock seeded movies for testing without hitting the API
