@@ -1,7 +1,7 @@
 import React from 'react';
 // import logo from '../assets/logo.png'; might come back to later
 import { useStateContext } from '../contexts/StateContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import FilterDropdown from "./FilterDropdown.jsx";
 import { HORROR_SUBCATEGORIES } from "../utils/horrorSubcategories";
 
@@ -20,6 +20,9 @@ function Navbar() {
     sortBy, setSortBy,
     resetFilters,
   } = useStateContext();
+
+  const location = useLocation();
+  const isHomepage = location.pathname === "/";
 
   // YEAR SEARCH DROPDOWN - A for loop to add options for the year ddm
   const currentYear = new Date().getFullYear();
@@ -68,7 +71,12 @@ function Navbar() {
       </nav>
       </div>
 
-     <FilterDropdown />
+     {isHomepage && <FilterDropdown />}
+
+    {isHomepage && (
+      <div className="SearchBar--wrapper">
+       
+
 
 <div className="SearchBar--wrapper">
   <form onSubmit={handleFormSubmit} className="SearchBar" data-testid="search-bar">
@@ -127,6 +135,9 @@ function Navbar() {
   <button type="submit">Search →</button>
 </form>
       </div>
+
+      </div>
+    )}
     </div>
   );
 };
