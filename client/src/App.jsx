@@ -6,6 +6,8 @@ import Profile from "./pages/Profile.jsx";
 import Navbar from './components/Navbar';
 import MovieList from './components/MovieList';
 import CourseDetails from './components/CourseDetails';
+import Films from "./pages/Films.jsx";
+import MustWatch from "./pages/MustWatch.jsx";
 
 import { StateContext } from './contexts/StateContext';
 import { SessionProvider } from './contexts/SessionContext';
@@ -24,6 +26,8 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/" element={<MovieList />} />
         <Route path="/course/:id" element={<CourseDetails />} />
+        <Route path="/films" element={<Films />} />
+        <Route path="/must-watch" element={<MustWatch />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
       </StateContext>
