@@ -10,6 +10,7 @@
 }
 .movie-card{
     margin: 0 0 1rem;
+    max-width: 200px;
 }
 .movie-title {
     font-family: var(--heading);
