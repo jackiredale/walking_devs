@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { apiFetch } from "../utils/api";
 import "./Watchlist.css";
 
-const TMDB_API_KEY = import.meta.env.VITE_MOVIE_API_KEY || import.meta.env.VITE_REACT_APP_API_KEY;
-const TMDB_BASE_URL = "https://api.themoviedb.org/3";
-const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
+
 
 export default function Watchlist() {
   const [movies, setMovies] = useState([]);
@@ -14,12 +12,8 @@ export default function Watchlist() {
   const navigate = useNavigate();
 
   const fetchMovieDetails = async (tmdbId) => {
-    const response = await fetch(`${TMDB_BASE_URL}/movie/${tmdbId}?api_key=${TMDB_API_KEY}`);
-    if (!response.ok) {
-      throw new Error(`Request failed: ${response.status}`);
-    }
-    return response.json();
-  };
+  return apiFetch(`/movies/${tmdbId}`);
+};
 
   useEffect(() => {
     let active = true;
@@ -40,9 +34,10 @@ export default function Watchlist() {
           try {
             const movieData = await fetchMovieDetails(item.tmdbId);
             return {
-              ...movieData,
-              watchlistItemId: item.id,
-            };
+  ...movieData,
+  watchlistItemId: item.id,
+  tmdbId: item.tmdbId,
+};
           } catch (err) {
             console.error(`Error fetching movie ${item.tmdbId}:`, err);
             return null;
@@ -73,9 +68,14 @@ export default function Watchlist() {
   };
 
   const handleRemove = async (tmdbId) => {
-    await apiFetch(`/watchlist/${tmdbId}`, { method: "DELETE" });
-    setMovies((current) => current.filter((movie) => movie.watchlistItemId !== tmdbId));
-  };
+  await apiFetch(`/watchlist/${tmdbId}`, { method: "DELETE" });
+
+  setMovies((current) =>
+    current.filter(
+      (movie) => String(movie.tmdbId) !== String(tmdbId)
+    )
+  );
+};
 
   if (loading) {
     return (
@@ -111,11 +111,11 @@ export default function Watchlist() {
 
       <div className="watchlist-grid">
         {movies.map((movie) => (
-          <div key={movie.watchlistItemId} className="watchlist-card" onClick={() => handleMovieClick(movie.id)}>
+          <div key={movie.watchlistItemId} className="watchlist-card" onClick={() => handleMovieClick(movie.tmdbId)}>
             <div className="watchlist-card__poster-wrap">
-              {movie.poster_path ? (
-                <img
-                  src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
+              {movie.posterUrl ? (
+  <img
+    src={movie.posterUrl}
                   alt={movie.title}
                   className="watchlist-card__poster"
                   onError={(e) => {
@@ -132,16 +132,16 @@ export default function Watchlist() {
             <div className="watchlist-card__body">
               <h3 className="watchlist-card__title">{movie.title}</h3>
               <div className="watchlist-card__meta">
-                <p>{movie.release_date ? new Date(movie.release_date).getFullYear() : "N/A"}</p>
+                <p>{movie.releaseYear || "N/A"}</p>
                 <p>{movie.runtime ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : "N/A"}</p>
                 <p className="watchlist-card__rating-line">
-                  ★ {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
+                 ★ {movie.averageRating ? Number(movie.averageRating).toFixed(1) : "N/A"}
                 </p>
               </div>
 
               <div className="watchlist-card__actions" onClick={(e) => e.stopPropagation()}>
                 <button
-                  onClick={() => handleRemove(movie.watchlistItemId)}
+                  onClick={() => handleRemove(movie.tmdbId)}
                   className="watchlist-card__remove"
                   aria-label={`Remove ${movie.title} from watchlist`}
                 >

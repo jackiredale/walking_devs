@@ -23,28 +23,45 @@ export default function MovieDetail() {
       setInWatchlist(false);
       setMovie(null);
 
-      try {
-        const authToken = localStorage.getItem("authToken");
+     try {
+  const authToken =
+    localStorage.getItem("authToken") || localStorage.getItem("token");
 
-        const [movieResponse, creditsResponse, items] = await Promise.all([
-          fetch(`${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}`).then((response) => {
-            if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-            return response.json();
-          }),
-          fetch(`${TMDB_BASE_URL}/movie/${movieId}/credits?api_key=${TMDB_API_KEY}`).then((response) => {
-            if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-            return response.json();
-          }),
-          authToken ? apiFetch("/watchlist").catch(() => []) : Promise.resolve([]),
-        ]);
+  const [movieResponse, items] = await Promise.all([
+    apiFetch(`/movies/${movieId}`),
+    authToken ? apiFetch("/watchlist").catch(() => []) : Promise.resolve([]),
+  ]);
 
-        setMovie({ ...movieResponse, credits: creditsResponse });
-        setInWatchlist(items.some((item) => item.tmdbId === movieResponse.id));
-      } catch (err) {
-        setError(err.message || "Failed to load movie");
-      } finally {
-        setLoading(false);
-      }
+  const formattedMovie = {
+    id: movieResponse.tmdbId,
+    title: movieResponse.title,
+    overview: movieResponse.description,
+    poster_path: movieResponse.posterUrl,
+    backdrop_path: movieResponse.posterUrl,
+    release_date: `${movieResponse.releaseYear}-01-01`,
+    runtime: movieResponse.runtime,
+    vote_average: Number(movieResponse.averageRating),
+    genres: (movieResponse.categories || []).map((name) => ({ name })),
+    credits: {
+      crew: movieResponse.director
+        ? [{ job: "Director", name: movieResponse.director }]
+        : [],
+      cast: [],
+    },
+  };
+
+  setMovie(formattedMovie);
+
+  setInWatchlist(
+    items.some(
+      (item) => String(item.tmdbId) === String(movieResponse.tmdbId)
+    )
+  );
+} catch (err) {
+  setError(err.message || "Failed to load movie");
+} finally {
+  setLoading(false);
+}
     };
 
     loadMovie();

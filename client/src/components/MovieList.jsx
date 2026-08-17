@@ -6,9 +6,11 @@ import './ErrorMessage.css';
 import ghost from "../assets/ghost.svg";
 
 function MovieList() {
-  const { data, baseImageUrl, currentPage, setCurrentPage, error } = useStateContext();
+ const { seededMovies, currentPage, setCurrentPage, error } = useStateContext();
 
-  const liveMovies = data?.results || [];
+const liveMovies = seededMovies || [];
+console.log("seededMovies:", seededMovies);
+console.log("error:", error);
 
   const moviesPerPage = 12;
   const startIndex = (currentPage - 1) * moviesPerPage;
@@ -96,16 +98,16 @@ function MovieList() {
     <div className="movie-list-page">
       <div className="movie-grid">
         {pagedLiveMovies.map((movie) => (
-          <Link key={movie.id} to={`/movie/${movie.id}`} className="movie-card">
-            {movie.poster_path && (
-              <img
-                src={`${baseImageUrl}${movie.poster_path}`}
-                alt={movie.title}
-              />
-            )}
-            <h3 className='movie-title'>{movie.title}</h3>
-            <p className='movie-year'>{movie.release_date?.slice(0, 4)}</p>
-          </Link>
+         <Link key={movie.id} to={`/movie/${movie.tmdbId}`} className="movie-card">
+  {movie.posterUrl && (
+    <img
+      src={movie.posterUrl}
+      alt={movie.title}
+    />
+  )}
+  <h3 className="movie-title">{movie.title}</h3>
+  <p className="movie-year">{movie.releaseYear}</p>
+</Link>
         ))}
       </div>
 

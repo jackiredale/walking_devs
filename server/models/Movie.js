@@ -55,12 +55,12 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    if (models.Watchlist) {
-      Movie.hasMany(models.Watchlist, {
-        foreignKey: "movieId",
-        onDelete: "CASCADE",
-      });
-    }
+    // if (models.Watchlist) {
+    //   Movie.hasMany(models.Watchlist, {
+    //     foreignKey: "movieId",
+    //     onDelete: "CASCADE",
+    //   });
+    // }
   };
 
   return Movie;

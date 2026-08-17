@@ -1,11 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "./Films.css";
+import { apiFetch } from "../utils/api";
 
-const TMDB_API_KEY = import.meta.env.VITE_MOVIE_API_KEY || import.meta.env.VITE_REACT_APP_API_KEY;
-const TMDB_BASE_URL = "https://api.themoviedb.org/3";
-const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w342";
-const HORROR_GENRE_ID = 27;
 
 const SUBGENRES = [
   "All",
@@ -38,71 +35,61 @@ export default function Films() {
   const [error, setError] = useState(null);
 
   const fetchMovies = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+  setLoading(true);
+  setError(null);
 
-    try {
-      let url;
+  try {
+    const params = new URLSearchParams();
 
-      if (searchTerm.trim()) {
-        // Text search ignores decade/genre/rating filters since TMDB's search
-        // endpoint doesn't support them the way /discover does.
-        url = `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(
-          searchTerm
-        )}`;
-      } else {
-        const params = new URLSearchParams({
-          api_key: TMDB_API_KEY,
-          with_genres: HORROR_GENRE_ID,
-          sort_by: sortBy,
-        });
-
-        if (decade) {
-          params.set("primary_release_date.gte", `${decade}-01-01`);
-          params.set("primary_release_date.lte", `${Number(decade) + 9}-12-31`);
-        }
-
-        if (minRating) {
-          params.set("vote_average.gte", minRating);
-        }
-
-        if (subgenre !== "All") {
-          // Look up TMDB's keyword ID for the subgenre so we can filter by it
-          const keywordRes = await fetch(
-            `${TMDB_BASE_URL}/search/keyword?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(
-              subgenre
-            )}`
-          );
-          const keywordData = await keywordRes.json();
-          const keywordId = keywordData.results?.[0]?.id;
-          if (keywordId) {
-            params.set("with_keywords", keywordId);
-          }
-        }
-
-        url = `${TMDB_BASE_URL}/discover/movie?${params.toString()}`;
-      }
-
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-      const data = await res.json();
-
-      // When searching by text, still restrict results to horror
-      const results = searchTerm.trim()
-        ? data.results.filter((m) => m.genre_ids?.includes(HORROR_GENRE_ID))
-        : data.results;
-
-      setMovies(results || []);
-    } catch (err) {
-      setError(err.message || "Error fetching movies");
-    } finally {
-      setLoading(false);
+    if (searchTerm.trim()) {
+      params.set("search", searchTerm.trim());
     }
-  }, [searchTerm, decade, subgenre, minRating, sortBy]);
 
-  useEffect(() => {
-    fetchMovies();
-  }, [fetchMovies]);
+    if (decade) {
+      params.set("decade", decade);
+    }
+
+    if (subgenre !== "All") {
+      params.set("subgenre", subgenre);
+    }
+
+    if (minRating) {
+      params.set("minRating", minRating);
+    }
+
+    const queryString = params.toString();
+    const data = await apiFetch(
+      `/movies${queryString ? `?${queryString}` : ""}`
+    );
+
+    let results = Array.isArray(data.movies) ? [...data.movies] : [];
+
+    if (sortBy === "vote_average.desc") {
+      results.sort(
+        (a, b) => Number(b.averageRating) - Number(a.averageRating)
+      );
+    }
+
+    if (sortBy === "primary_release_date.desc") {
+      results.sort((a, b) => b.releaseYear - a.releaseYear);
+    }
+
+    if (sortBy === "primary_release_date.asc") {
+      results.sort((a, b) => a.releaseYear - b.releaseYear);
+    }
+
+    setMovies(results);
+  } catch (err) {
+    setError(err.message || "Error fetching movies");
+  } finally {
+    setLoading(false);
+  }
+}, [searchTerm, decade, subgenre, minRating, sortBy]);
+
+useEffect(() => {
+  fetchMovies();
+}, [fetchMovies]);
+
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -195,18 +182,25 @@ export default function Films() {
 
         <div className="films-grid">
           {movies.map((movie) => (
-            <Link to={`/movie/${movie.id}`} key={movie.id} className="films-card">
-              {movie.poster_path ? (
-                <img
-                  src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
-                  alt={movie.title}
-                  className="films-card-poster"
-                />
-              ) : (
-                <div className="films-card-poster films-card-poster--empty">No Poster</div>
-              )}
-              <p className="films-card-title">{movie.title}</p>
-            </Link>
+     <Link
+  to={`/movie/${movie.tmdbId}`}
+  key={movie.id}
+  className="films-card"
+>
+  {movie.posterUrl ? (
+    <img
+      src={movie.posterUrl}
+      alt={movie.title}
+      className="films-card-poster"
+    />
+  ) : (
+    <div className="films-card-poster films-card-poster--empty">
+      No Poster
+    </div>
+  )}
+
+  <p className="films-card-title">{movie.title}</p>
+</Link>
           ))}
         </div>
       </div>
