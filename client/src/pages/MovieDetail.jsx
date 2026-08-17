@@ -23,28 +23,45 @@ export default function MovieDetail() {
       setInWatchlist(false);
       setMovie(null);
 
-      try {
-        const authToken = localStorage.getItem("authToken");
+     try {
+  const authToken =
+    localStorage.getItem("authToken") || localStorage.getItem("token");
 
-        const [movieResponse, creditsResponse, items] = await Promise.all([
-          fetch(`${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}`).then((response) => {
-            if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-            return response.json();
-          }),
-          fetch(`${TMDB_BASE_URL}/movie/${movieId}/credits?api_key=${TMDB_API_KEY}`).then((response) => {
-            if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-            return response.json();
-          }),
-          authToken ? apiFetch("/watchlist").catch(() => []) : Promise.resolve([]),
-        ]);
+  const [movieResponse, items] = await Promise.all([
+    apiFetch(`/movies/${movieId}`),
+    authToken ? apiFetch("/watchlist").catch(() => []) : Promise.resolve([]),
+  ]);
 
-        setMovie({ ...movieResponse, credits: creditsResponse });
-        setInWatchlist(items.some((item) => item.tmdbId === movieResponse.id));
-      } catch (err) {
-        setError(err.message || "Failed to load movie");
-      } finally {
-        setLoading(false);
-      }
+  const formattedMovie = {
+    id: movieResponse.tmdbId,
+    title: movieResponse.title,
+    overview: movieResponse.description,
+    poster_path: movieResponse.posterUrl,
+    backdrop_path: movieResponse.posterUrl,
+    release_date: `${movieResponse.releaseYear}-01-01`,
+    runtime: movieResponse.runtime,
+    vote_average: Number(movieResponse.averageRating),
+    genres: (movieResponse.categories || []).map((name) => ({ name })),
+    credits: {
+      crew: movieResponse.director
+        ? [{ job: "Director", name: movieResponse.director }]
+        : [],
+      cast: [],
+    },
+  };
+
+  setMovie(formattedMovie);
+
+  setInWatchlist(
+    items.some(
+      (item) => String(item.tmdbId) === String(movieResponse.tmdbId)
+    )
+  );
+} catch (err) {
+  setError(err.message || "Failed to load movie");
+} finally {
+  setLoading(false);
+}
     };
 
     loadMovie();
@@ -78,7 +95,7 @@ export default function MovieDetail() {
 
   const director = movie.credits?.crew?.find((person) => person.job === "Director");
   const cast = movie.credits?.cast?.slice(0, 5) || [];
-  const runtime = movie.runtime ? `${Math.floor(movie.runtime / 60)} min` : "N/A";
+  const runtime = movie.runtime ? `${movie.runtime} min` : "N/A";
   const releaseYear = movie.release_date ? new Date(movie.release_date).getFullYear() : "N/A";
   const releaseDate = movie.release_date ? new Date(movie.release_date).toLocaleDateString() : "N/A";
   const backdropPath = movie.backdrop_path || movie.poster_path;
@@ -176,44 +193,6 @@ export default function MovieDetail() {
                   posterPath={movie.poster_path}
                   initialSaved={inWatchlist}
                 />
-              </div>
-
-              <div className="movie-detail__stats">
-                {releaseDate !== "N/A" && (
-                  <div className="movie-detail__stat-card">
-                    <h3 className="movie-detail__stat-label">
-                      <svg className="movie-detail__stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      Release Date
-                    </h3>
-                    <p className="movie-detail__stat-value">{releaseDate}</p>
-                  </div>
-                )}
-
-                {movie.runtime && (
-                  <div className="movie-detail__stat-card">
-                    <h3 className="movie-detail__stat-label">
-                      <svg className="movie-detail__stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      Runtime
-                    </h3>
-                    <p className="movie-detail__stat-value">{runtime}</p>
-                  </div>
-                )}
-
-                {movie.vote_average !== undefined && (
-                  <div className="movie-detail__stat-card">
-                    <h3 className="movie-detail__stat-label">
-                      <svg className="movie-detail__stat-icon movie-detail__stat-icon--star" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                      Rating
-                    </h3>
-                    <p className="movie-detail__stat-value">{movie.vote_average.toFixed(1)}</p>
-                  </div>
-                )}
               </div>
 
               {cast.length > 0 && (

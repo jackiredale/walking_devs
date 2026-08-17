@@ -6,29 +6,25 @@ import './ErrorMessage.css';
 import ghost from "../assets/ghost.svg";
 
 function MovieList() {
-  const { data, baseImageUrl, seededMovies, currentPage, setCurrentPage, error } = useStateContext();
+ const { seededMovies, currentPage, setCurrentPage, error } = useStateContext();
 
-  const formattedSeededMovies = seededMovies.map((movie) => ({
-    id: movie.tmdbId,
-    poster_path: movie.posterUrl,
-    title: movie.title,
-    release_date: String(movie.releaseYear),
-  }));
+const liveMovies = seededMovies || [];
+console.log("seededMovies:", seededMovies);
+console.log("error:", error);
 
-  const moviesPerPage = 12; // Number of movies to display per page
+  const moviesPerPage = 12;
   const startIndex = (currentPage - 1) * moviesPerPage;
   const endIndex = startIndex + moviesPerPage;
-  const movies = formattedSeededMovies.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(formattedSeededMovies.length / moviesPerPage);
+  const pagedLiveMovies = liveMovies.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(liveMovies.length / moviesPerPage);
 
   if (error) {
     return <ErrorMessage />;
   }
 
-  if (formattedSeededMovies.length === 0) {
+  if (liveMovies.length === 0) {
     return <div className="no-movies-message">
 
-    {/* Spiders dangling and floating on their threads */}
     <div className="spider spider-1">
       <div className="eye left"></div>
       <div className="eye right"></div>
@@ -81,7 +77,6 @@ function MovieList() {
       <span className="leg right"></span>
     </div>
 
-    {/* Main content: tagline, floating ghost, headline */}
     <div className="content">
       <p className="tagline">Muahahahaha!</p>
 
@@ -100,21 +95,40 @@ function MovieList() {
   }
 
   return (
+    <div className="movie-list-page">
       <div className="movie-grid">
-      {movies.map((movie) => (
-        <Link key={movie.id} to={`/movie/${movie.id}`} className="movie-card">
-          {movie.poster_path && (
-            <img
-              src={movie.poster_path.startsWith('http') ? movie.poster_path : `${baseImageUrl}${movie.poster_path}`}
-              alt={movie.title}
-            />
-          )}
-          <h3 className='movie-title'>{movie.title}</h3>
-          <p className='movie-year'>{movie.release_date?.slice(0, 4)}</p>
-        </Link>
-      ))}
-    </div>
+        {pagedLiveMovies.map((movie) => (
+         <Link key={movie.id} to={`/movie/${movie.tmdbId}`} className="movie-card">
+  {movie.posterUrl && (
+    <img
+      src={movie.posterUrl}
+      alt={movie.title}
+    />
+  )}
+  <h3 className="movie-title">{movie.title}</h3>
+  <p className="movie-year">{movie.releaseYear}</p>
+</Link>
+        ))}
+      </div>
 
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            disabled={currentPage <= 1}
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+          >
+            Previous
+          </button>
+          <span>Page {currentPage} of {totalPages}</span>
+          <button
+            disabled={currentPage >= totalPages}
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 

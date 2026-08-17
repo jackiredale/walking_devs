@@ -10,6 +10,7 @@
 }
 .movie-card{
     margin: 0 0 1rem;
+    max-width: 200px;
 }
 .movie-title {
     font-family: var(--heading);
@@ -23,4 +24,89 @@
     font-size: .76rem;
     color: var(--text-faint);
     margin: 0;
+}
+/* Must-Watch curated row */
+.must-watch-section {
+  padding: 2rem;
+  border-bottom: 1px solid #262626;
+}
+
+.must-watch-title {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.must-watch-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.must-watch-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.must-watch-row::-webkit-scrollbar-thumb {
+  background: #8c1010;
+}
+
+.must-watch-card {
+  flex: 0 0 auto;
+  width: 150px;
+}
+
+.must-watch-card img {
+  width: 150px;
+  height: 225px;
+  object-fit: cover;
+}
+
+/* Live browse section */
+.browse-section {
+  padding: 2rem;
+}
+
+.browse-title {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.browse-empty {
+  color: #999;
+  font-size: 1rem;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  color: #ccc;
+}
+
+.pagination button {
+  background: #1f1f1f;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #8c1010;
+  border-color: #8c1010;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }

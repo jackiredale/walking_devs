@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { discoverByHorrorSubcategory } from "../utils/horrorSubcategories";
 import loader from "../assets/loader.gif";
 import seededMoviesData from "../mock/seededMovies.json";
+import { apiFetch } from "../utils/api";
 
 const Context = createContext();
 
@@ -36,51 +37,51 @@ export const StateContext = ({ children }) => {
   const [seededMovies, setSeededMovies] = useState([]);
 
   //This runs the cat navigation to filter the movies - see FilterDropdown.jsx
-  useEffect(() => {
-    if (query || !subcategory) return;
-    const fetchBySubcategory = async () => {
-      setData([]);
-      try {
-        const responseData = await discoverByHorrorSubcategory(subcategory, {
-          apiUrl, apiKey, rating, decade, sortBy,
-        });
-        setData(responseData);
-      } catch {
-        setError("Error fetching movies by subcategory");
-      }
-    };
-    fetchBySubcategory();
-  }, [subcategory, rating, decade, sortBy]);
+  // useEffect(() => {
+  //   if (query || !subcategory) return;
+  //   const fetchBySubcategory = async () => {
+  //     setData([]);
+  //     try {
+  //       const responseData = await discoverByHorrorSubcategory(subcategory, {
+  //         apiUrl, apiKey, rating, decade, sortBy,
+  //       });
+  //       setData(responseData);
+  //     } catch {
+  //       setError("Error fetching movies by subcategory");
+  //     }
+  //   };
+  //   fetchBySubcategory();
+  // }, [subcategory, rating, decade, sortBy]);
 
   //this runs decade and rating together instead of overwriting each other
-  useEffect(() => {
-    if (query || subcategory) return; // let search or the category tabs take priority
-    if (!decade && !rating) return;
+  // useEffect(() => {
+  //   if (query || subcategory) return; // let search or the category tabs take priority
+  //   if (!decade && !rating) return;
 
-    const fetchFilteredMovies = async () => {
-      setData([]);
-      const params = new URLSearchParams({
-        api_key: apiKey,
-        sort_by: sortBy,
-        with_genres: "27",
-      });
-      if (decade) {
-        params.set("primary_release_date.gte", `${decade}-01-01`);
-        params.set("primary_release_date.lte", `${Number(decade) + 9}-12-31`);
-      }
-      if (rating) {
-        params.set("vote_average.gte", rating);
-      }
-      try {
-        const responseData = await fetchJson(`${apiUrl}/discover/movie?${params}`);
-        setData(responseData);
-      } catch {
-        setError("Error fetching filtered movies");
-      }
-    };
+  //   const fetchFilteredMovies = async () => {
+  //     setData([]);
+  //     const params = new URLSearchParams({
+  //       api_key: apiKey,
+  //       sort_by: sortBy,
+  //       with_genres: "27",
+  //     });
+  //     if (decade) {
+  //       params.set("primary_release_date.gte", `${decade}-01-01`);
+  //       params.set("primary_release_date.lte", `${Number(decade) + 9}-12-31`);
+  //     }
+  //     if (rating) {
+  //       params.set("vote_average.gte", rating);
+  //     }
+  //     try {
+  //       const responseData = await fetchJson(`${apiUrl}/discover/movie?${params}`);
+  //       setData(responseData);
+  //     } catch {
+  //       setError("Error fetching filtered movies");
+  //     }
+  //   };
 
-    fetchFilteredMovies();
-  }, [decade, rating, sortBy, subcategory, query]);
+  //   fetchFilteredMovies();
+  // }, [decade, rating, sortBy, subcategory, query]);
 
   // default trending list — shown when there's no active search
   const displayMovies = async () => {
@@ -95,52 +96,69 @@ export const StateContext = ({ children }) => {
   }
   };
 
-  //  mock seeded movies for testing without hitting the API
-  const mockSeededMovies = (params) => {
-    const search = params.get("search");
-    const subgenre = params.get("subgenre");
-    const decade = params.get("decade");
-    const minRating = params.get("minRating");
+// TODO: Once Tamara's backend is ready, replace the mockSeededMovies function 
+// below with a real API call to fetch seeded movies from the backend. 
+// For now, it uses the seededMoviesData JSON file for testing purposes.
 
-    const filtered = seededMoviesData.filter((movie) => {
-      const matchesSearch =
-        !search || movie.title.toLowerCase().includes(search.toLowerCase());
-      const matchesSubgenre =
-        !subgenre ||
-        movie.categories.some(
-          (c) => c.toLowerCase() === subgenre.toLowerCase()
-        );
-      const matchesDecade =
-        !decade ||
-        (movie.releaseYear >= Number(decade) &&
-          movie.releaseYear <= Number(decade) + 9);
-      const matchesRating =
-        !minRating || movie.averageRating >= Number(minRating);
-      return matchesSearch && matchesSubgenre && matchesDecade && matchesRating;
-    });
-
-    return Promise.resolve({ movies: filtered });
-  };
-
-  //  mock seeded movie detail for testing without hitting the API
-  const getMovieById = (id) => {
-  const found = seededMoviesData.find((movie) => String(movie.tmdbId) === String(id));
-    if (!found) {
-      return Promise.reject(new Error("Movie not found"));
-    }
-
-  return Promise.resolve({
-    id: found.tmdbId,
-    title: found.title,
-    overview: found.description,
-    poster_path: found.posterUrl,
-    release_date: `${found.releaseYear}-01-01`,
-    runtime: found.runtime,
-    vote_average: found.averageRating,
-    genres: found.categories.map((name) => ({ name })),
-    credits: { crew: [{ job: "Director", name: found.director }], cast: [] },
-  });
+const mockSeededMovies = async (params) => {
+  const movies = await apiFetch(`/movies?${params}`);
+ return movies;
 };
+
+  //  mock seeded movies for testing without hitting the API
+    // const mockSeededMovies = (params) => {
+    // const search = params.get("search");
+    // const subgenre = params.get("subgenre");
+    // const decade = params.get("decade");
+    // const minRating = params.get("minRating");
+
+  //   const filtered = seededMoviesData.filter((movie) => {
+  //     const matchesSearch =
+  //       !search || movie.title.toLowerCase().includes(search.toLowerCase());
+  //     const matchesSubgenre =
+  //       !subgenre ||
+  //       movie.categories.some(
+  //         (c) => c.toLowerCase() === subgenre.toLowerCase()
+  //       );
+  //     const matchesDecade =
+  //       !decade ||
+  //       (movie.releaseYear >= Number(decade) &&
+  //         movie.releaseYear <= Number(decade) + 9);
+  //     const matchesRating =
+  //       !minRating || movie.averageRating >= Number(minRating);
+  //     return matchesSearch && matchesSubgenre && matchesDecade && matchesRating;
+  //   });
+
+  //   return Promise.resolve({ movies: filtered });
+  // };
+
+// TODO: once Tamara's backend is ready, replace the line below with:
+const getMovieById = async (id) => {
+  const found = await apiFetch(`/movies/${id}`);
+  if (!found) return Promise.reject(new Error("Movie not found"));
+  return found;
+};
+
+//  mock seeded movie detail for testing without hitting the API
+// const getMovieById = (id) => {
+//   const found = seededMoviesData.find((movie) => String(movie.tmdbId) === String(id));
+//   if (!found) {
+//     return Promise.reject(new Error("Movie not found"));
+//   }
+
+//   return Promise.resolve({
+//     id: found.tmdbId,
+//     title: found.title,
+//     overview: found.description,
+//     poster_path: found.posterUrl,
+//     release_date: `${found.releaseYear}-01-01`,
+//     runtime: found.runtime,
+//     vote_average: found.averageRating,
+//     genres: found.categories.map((name) => ({ name })),
+//     credits: { crew: [{ job: "Director", name: found.director }], cast: [] },
+//   });
+// };
+
 
   // this runs the mock seeded movies function whenever the search box or filters change
 
@@ -154,7 +172,21 @@ export const StateContext = ({ children }) => {
 
       try {
         const responseData = await mockSeededMovies(params);
-        setSeededMovies(responseData.movies);
+        let sortedMovies = [...responseData.movies];
+
+if (sortBy === "vote_average.desc") {
+  sortedMovies.sort(
+    (a, b) => Number(b.averageRating) - Number(a.averageRating)
+  );
+}
+
+if (sortBy === "release_date.desc") {
+  sortedMovies.sort(
+    (a, b) => Number(b.releaseYear) - Number(a.releaseYear)
+  );
+}
+
+setSeededMovies(sortedMovies);
         setCurrentPage(1); // reset to first page whenever filters change
       } catch {
         setError("Error fetching seeded movies");
@@ -163,12 +195,12 @@ export const StateContext = ({ children }) => {
     fetchSeeded();
   }, [query, subcategory, decade, rating, sortBy]);
 
-  // shows the trending list on page load, and again whenever the search box is cleared
-  useEffect(() => {
-    if (!query) {
-      displayMovies();
-    }
-  }, [query]);
+  // // shows the trending list on page load, and again whenever the search box is cleared
+  // useEffect(() => {
+  //   if (!query) {
+  //     displayMovies();
+  //   }
+  // }, [query]);
 
   //updates query whenever you type something in the search box
   const handleInputChange = (event) => {

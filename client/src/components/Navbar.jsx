@@ -57,6 +57,7 @@ function Navbar() {
 
        <nav className='TopNav'>
               <Link to="/">Films</Link>
+              <Link to="/must-watch">Must Watch</Link>
               <Link to="/watchlist">Watchlist</Link>
               {user?.id ? (
                 <>

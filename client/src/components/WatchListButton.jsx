@@ -8,7 +8,7 @@ export default function WatchlistButton({ movieId, title, posterPath, initialSav
   const navigate = useNavigate();
 
   const toggle = async () => {
-    const authToken = localStorage.getItem("authToken");
+    const authToken = localStorage.getItem("authToken") || localStorage.getItem("token");
     if (!authToken) {
       navigate("/login");
       return;
@@ -18,13 +18,9 @@ export default function WatchlistButton({ movieId, title, posterPath, initialSav
       if (saved) {
         await apiFetch(`/watchlist/${movieId}`, { method: "DELETE" });
       } else {
-        await apiFetch("/watchlist", {
+        await apiFetch(`/watchlist/${movieId}`, {
           method: "POST",
-          body: JSON.stringify({
-            tmdbId: movieId,
-            title,
-            posterPath,
-          }),
+          body: JSON.stringify({ title, posterPath }),
         });
       }
       setSaved((current) => !current);
@@ -33,5 +29,9 @@ export default function WatchlistButton({ movieId, title, posterPath, initialSav
     }
   };
 
-  return <button className={saved ? "btn-watchlist active" : "btn-watchlist"} onClick={toggle}>{saved ? "★ In Watchlist" : "+ Add to Watchlist"}</button>;
+  return (
+    <button className={saved ? "btn-watchlist active" : "btn-watchlist"} onClick={toggle}>
+      {saved ? "★ In Watchlist" : "+ Add to Watchlist"}
+    </button>
+  );
 }
